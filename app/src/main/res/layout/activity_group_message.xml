@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/ic_educationbackground_03"
+    android:layout_height="match_parent"
+    tools:context=".ui.group_message.GroupMessageActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#E5F2FE"
+            app:navigationIcon="@drawable/ic_back_arrow">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_marginStart="-10dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/group_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Rounded"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/group_image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="165dp"
+                        android:layout_height="17dp"
+                        android:fontFamily="@font/rosario_bold"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        tools:text="Android Development" />
+
+                    <TextView
+                        android:layout_width="85dp"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/rosario"
+                        android:textSize="14sp"
+                        tools:text="For students" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_vector__1_" />
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RecyclerView_groupMessage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="10dp"
+            tools:itemCount="10"
+            tools:listitem="@layout/item_group_message_image" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/groupMessageTextView"
+            android:layout_width="150dp"
+            android:layout_height="70dp" />
+
+        <Button
+            android:id="@+id/groupTextMessageSend"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/ic_email_vec"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

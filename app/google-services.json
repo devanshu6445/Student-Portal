@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "635127455493",
+    "firebase_url": "https://stuednt-portal-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "stuednt-portal",
+    "storage_bucket": "stuednt-portal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635127455493:android:198593b86904db6e2c216c",
+        "android_client_info": {
+          "package_name": "com.college.portal.studentportal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635127455493-rr3e75ohr331avpkqm0qhda4gvbfqb80.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHsooUCeLC70yzjy2qI7PLliQ8IxTElSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635127455493-rr3e75ohr331avpkqm0qhda4gvbfqb80.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

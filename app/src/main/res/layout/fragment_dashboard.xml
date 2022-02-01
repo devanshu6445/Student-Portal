@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".ui.dashboard.DashboardFragment">
+
+    <RelativeLayout
+        android:id="@+id/searchParent"
+        android:layout_width="350dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:outlineProvider="bounds"
+        android:elevation="20dp">
+
+        <EditText
+            android:id="@+id/searchGroups"
+            android:layout_width="321dp"
+            android:layout_height="48dp"
+            android:background="@drawable/ic_search_edittext_background"
+            android:layout_centerInParent="true"
+            android:hint="@string/search"
+            android:textSize="20sp"
+            android:paddingStart="40dp"
+            android:inputType="text"
+            />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
+            android:layout_alignStart="@+id/searchGroups"
+            android:layout_alignTop="@+id/searchGroups"
+            android:layout_alignEnd="@+id/searchGroups"
+            android:layout_alignBottom="@+id/searchGroups"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="286dp"
+            android:layout_marginBottom="12dp"
+            android:src="@drawable/ic_search" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/groupRecyclerView"
+        android:layout_marginTop="30dp"
+        android:layout_width="324dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        tools:listitem="@layout/groups_item"
+        android:layout_below="@+id/searchParent"
+        tools:itemCount="9"/>
+
+
+
+</RelativeLayout>

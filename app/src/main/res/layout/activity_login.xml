@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.LoginActivity">
+
+    <RelativeLayout
+        android:id="@+id/login_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/login_background"
+            android:layout_width="match_parent"
+            android:layout_height="259dp"
+            android:background="@drawable/ic_login_top_backgroung"/>
+
+        <TextView
+            android:id="@+id/welcome_to"
+            android:layout_width="198dp"
+            android:layout_height="90dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="84dp"
+            android:fontFamily="@font/rosario_bold"
+            android:text="@string/welcome_to_ratm"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="36sp" />
+
+        <ImageView
+            android:id="@+id/login_design"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:layout_alignBottom="@+id/login_background"
+            android:background="@drawable/ic_login_top_design" />
+
+        <RelativeLayout
+            android:layout_width="257dp"
+            android:layout_height="245dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/login_design"
+            android:layout_centerInParent="true">
+
+            <RelativeLayout
+                android:id="@+id/emailView"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:id="@+id/emailText"
+                    android:layout_width="45dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="30dp"
+                    android:fontFamily="@font/rosario"
+                    android:text="@string/email"
+                    android:textColor="#9B8787"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/login_password_vec"
+                    android:layout_width="20dp"
+                    android:layout_height="16dp"
+
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_email_vec" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userEmail"
+                    android:layout_width="233dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/emailText"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/login_password_vec"
+                    android:backgroundTint="#41afd1"
+                    android:fontFamily="@font/rosario_bold"
+                    android:inputType="textEmailAddress" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/passwordView"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_below="@+id/emailView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="33dp">
+
+                <TextView
+                    android:id="@+id/passwordText"
+                    android:layout_width="65dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="30dp"
+                    android:fontFamily="@font/rosario"
+                    android:text="@string/password"
+                    android:textColor="#9B8787"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/login_email_vec"
+                    android:layout_width="20dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="10dp"
+
+                    android:src="@drawable/ic_password_vec" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userPassword"
+                    android:layout_width="233dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/passwordText"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/login_email_vec"
+                    android:backgroundTint="#41afd1"
+                    android:inputType="textPassword"
+                    android:letterSpacing="0.2"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/passwordView"
+                android:layout_alignParentEnd="true"
+
+                android:fontFamily="@font/rosario_bold"
+                android:text="@string/forgot_the_password"
+                android:textColor="#9b8787" />
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/ic_login_button_background"
+                android:fontFamily="@font/rosario"
+                android:text="@string/login"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+        
+        
+    </RelativeLayout>
+
+    
+
+</androidx.constraintlayout.widget.ConstraintLayout>

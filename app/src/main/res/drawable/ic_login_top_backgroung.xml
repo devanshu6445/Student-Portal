@@ -1,0 +1,44 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="360dp"
+    android:height="259dp"
+    android:viewportWidth="360"
+    android:viewportHeight="259">
+  <path
+      android:pathData="M0,0h360v259h-360z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:gradientRadius="745.161"
+          android:centerX="0"
+          android:centerY="0"
+          android:type="radial">
+        <item android:offset="0" android:color="#FF554AED"/>
+        <item android:offset="0.233278" android:color="#FF2474F4"/>
+        <item android:offset="0.551821" android:color="#F03EA8F9"/>
+        <item android:offset="0.751906" android:color="#663EA8F9"/>
+        <item android:offset="0.88646" android:color="#893EA8F9"/>
+        <item android:offset="1" android:color="#002FB4FB"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <path
+      android:pathData="M155.5,26L170.5,26A9.5,9.5 0,0 1,180 35.5L180,35.5A9.5,9.5 0,0 1,170.5 45L155.5,45A9.5,9.5 0,0 1,146 35.5L146,35.5A9.5,9.5 0,0 1,155.5 26z"
+      android:fillColor="#38A6FD"
+      android:fillAlpha="0.4"/>
+  <path
+      android:pathData="M226.5,185L241.5,185A9.5,9.5 0,0 1,251 194.5L251,194.5A9.5,9.5 0,0 1,241.5 204L226.5,204A9.5,9.5 0,0 1,217 194.5L217,194.5A9.5,9.5 0,0 1,226.5 185z"
+      android:fillColor="#38A6FD"
+      android:fillAlpha="0.6"/>
+  <path
+      android:pathData="M303.5,102L318.5,102A9.5,9.5 0,0 1,328 111.5L328,111.5A9.5,9.5 0,0 1,318.5 121L303.5,121A9.5,9.5 0,0 1,294 111.5L294,111.5A9.5,9.5 0,0 1,303.5 102z"
+      android:fillColor="#38A6FD"
+      android:fillAlpha="0.5"/>
+  <path
+      android:pathData="M0,119H43C48.523,119 53,123.477 53,129V129C53,134.523 48.523,139 43,139H0V119Z"
+      android:fillColor="#38A6FD"
+      android:fillAlpha="0.4"/>
+  <path
+      android:pathData="M281,76C281,71.029 285.029,67 290,67H360V85H290C285.029,85 281,80.971 281,76V76Z"
+      android:fillColor="#38A6FD"
+      android:fillAlpha="0.4"/>
+</vector>

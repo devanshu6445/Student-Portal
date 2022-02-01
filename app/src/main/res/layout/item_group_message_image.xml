@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageMessage_senderImage"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="7dp"
+        android:outlineProvider="bounds"
+        android:elevation="10dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Rounded"
+        android:contentDescription="@string/profile_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/group_imageMessage_Sender"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:gravity="center"
+        android:fontFamily="@font/rosario_bold"
+        android:layout_marginStart="7dp"
+        android:outlineProvider="bounds"
+        android:elevation="10dp"
+        android:background="@drawable/ic_sender_name_textview"
+        tools:text="Devanshu Pathsariya"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageMessage_senderImage"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/group_imageMessage"
+        android:layout_width="185dp"
+        android:layout_height="125dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.SelectedCornerCut"
+        android:layout_marginTop="7dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@+id/group_imageMessage_Sender"
+        app:layout_constraintTop_toBottomOf="@+id/group_imageMessage_Sender"
+        tools:srcCompat="@tools:sample/avatars"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
