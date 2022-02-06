@@ -22,18 +22,20 @@
         <entry key="app/src/main/res/drawable/ic_search_edittext_background.xml" value="0.14351851851851852" />
         <entry key="app/src/main/res/drawable/ic_sender_name_textview.xml" value="0.15" />
         <entry key="app/src/main/res/drawable/ic_vector__1_.xml" value="0.1495" />
+        <entry key="app/src/main/res/drawable/message_edit_text_background.xml" value="0.1765" />
+        <entry key="app/src/main/res/drawable/message_send_background.xml" value="0.1765" />
         <entry key="app/src/main/res/font/rosario_bold.xml" value="0.22" />
         <entry key="app/src/main/res/font/rosario_light.xml" value="0.14662162162162162" />
         <entry key="app/src/main/res/layout-w1240dp/activity_login.xml" value="0.12583668005354753" />
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.1366120218579235" />
-        <entry key="app/src/main/res/layout/activity_group_message.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_group_message.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12817028985507245" />
         <entry key="app/src/main/res/layout/activity_student_main.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
         <entry key="app/src/main/res/layout/groups_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_group_message_image.xml" value="0.67" />
-        <entry key="app/src/main/res/layout/item_group_message_text.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/item_group_message_text.xml" value="0.33" />
         <entry key="app/src/main/res/layout/login_field.xml" value="0.17407407407407408" />
       </map>
     </option>
@@ -43,5 +45,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.18" />
+      </ProjectState>
+    </option>
   </component>
 </project>

@@ -16,22 +16,27 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/group_message_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#E5F2FE"
+            app:contentInsetStartWithNavigation="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
             app:navigationIcon="@drawable/ic_back_arrow">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:layout_marginStart="-10dp">
+                tools:layout_marginStart="-20dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/group_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Rounded"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:src="@drawable/shutterstock_1137339098" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -46,7 +51,7 @@
                         android:fontFamily="@font/rosario_bold"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        tools:text="Android Development" />
+                        android:text="Android Development" />
 
                     <TextView
                         android:layout_width="85dp"
@@ -54,7 +59,7 @@
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/rosario"
                         android:textSize="14sp"
-                        tools:text="For students" />
+                        android:text="For students" />
                 </LinearLayout>
 
                 <ImageButton
@@ -83,30 +88,82 @@
             android:id="@+id/RecyclerView_groupMessage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingStart="10dp"
             android:paddingTop="10dp"
             tools:itemCount="10"
-            tools:listitem="@layout/item_group_message_image" />
+            tools:listitem="@layout/item_group_message_text" />
 
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:orientation="horizontal"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/messageBoxParent"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/groupMessageTextView"
-            android:layout_width="150dp"
-            android:layout_height="70dp" />
+        <RelativeLayout
+            android:elevation="5dp"
+            android:id="@+id/messageBox"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/message_edit_text_background">
 
-        <Button
+            <EditText
+                android:id="@+id/groupMessageTextView"
+                android:layout_width="168dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/rosario_bold"
+                android:hint="Type a message..." />
+
+            <ImageView
+                android:id="@+id/group_messageDocument"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/groupMessageTextView"
+                android:src="@drawable/ic_documents" />
+
+            <ImageView
+                android:id="@+id/group_messageImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_toEndOf="@+id/group_messageDocument"
+                android:src="@drawable/ic_image" />
+
+
+        </RelativeLayout>
+
+        <ImageButton
             android:id="@+id/groupTextMessageSend"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:background="@drawable/ic_email_vec"/>
-    </LinearLayout>
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:elevation="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toEndOf="@+id/messageBox"
+            android:contentDescription="@string/send_message"
+            android:background="@drawable/message_send_background"
+            android:src="@drawable/ic_send_mail" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

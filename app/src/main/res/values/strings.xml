@@ -22,5 +22,6 @@
     <string name="purpose_college">College</string>
     <string name="search">Search</string>
     <string name="profile_image">Profile Image</string>
+    <string name="send_message">Send Message</string>
 
 </resources>

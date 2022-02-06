@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="275dp"
@@ -14,9 +14,6 @@
         android:contentDescription="@string/profile_image"
         android:elevation="1dp"
         android:outlineProvider="bounds"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Rounded"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -25,24 +22,25 @@
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_marginStart="7dp"
+        android:layout_toEndOf="@+id/textMessage_senderImage"
         android:background="@drawable/ic_sender_name_textview"
-        android:elevation="1dp"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
         android:fontFamily="@font/rosario_bold"
         android:gravity="center_vertical"
         android:outlineProvider="bounds"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:textAlignment="textStart"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/textMessage_senderImage"
-        app:layout_constraintTop_toTopOf="parent"
         tools:text="Devanshu Pathsariya" />
 
     <TextView
         android:id="@+id/group_textMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/group_textMessage_senderName"
+        android:layout_marginStart="7dp"
         android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/textMessage_senderImage"
         android:background="@drawable/ic_message_textview"
         android:fontFamily="@font/rosario_bold"
         android:gravity="center_vertical"
@@ -51,11 +49,6 @@
         android:paddingEnd="10dp"
         android:paddingBottom="7dp"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/group_textMessage_senderName"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/group_textMessage_senderName"
-        app:layout_constraintTop_toBottomOf="@+id/group_textMessage_senderName"
-        tools:text="What should we do then ?"/>
+        tools:text="What should we do then ?ddddd ddddddddddddddddddddddddddddddddddddddddddddd" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
