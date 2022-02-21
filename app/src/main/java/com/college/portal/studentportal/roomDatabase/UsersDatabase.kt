@@ -10,6 +10,7 @@ abstract class UsersDatabase: RoomDatabase() {
 
     abstract fun getUserDao() : UserDao
 
+
     companion object{
 
         @Volatile

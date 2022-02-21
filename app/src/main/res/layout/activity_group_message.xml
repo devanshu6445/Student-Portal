@@ -39,6 +39,7 @@
                     android:src="@drawable/shutterstock_1137339098" />
 
                 <LinearLayout
+                    android:id="@+id/groupTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -80,6 +81,7 @@
         android:id="@+id/relativeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
@@ -90,14 +92,17 @@
             android:layout_height="match_parent"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
-            tools:itemCount="10"
-            tools:listitem="@layout/item_group_message_text" />
+            tools:itemCount="1"
+            tools:listitem="@layout/item_group_message_text" >
+
+        </androidx.recyclerview.widget.RecyclerView>
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -106,37 +111,42 @@
     <RelativeLayout
         android:id="@+id/messageBoxParent"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent">
 
         <RelativeLayout
             android:elevation="5dp"
             android:id="@+id/messageBox"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/message_edit_text_background">
 
             <EditText
                 android:id="@+id/groupMessageTextView"
-                android:layout_width="168dp"
-                android:layout_height="40dp"
+                android:layout_width="218dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/group_messageDocument"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/rosario_bold"
-                android:hint="Type a message..." />
+                android:hint="@string/type_a_message"
+                android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/group_messageDocument"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@id/groupMessageTextView"
+                android:layout_marginEnd="15dp"
+                android:layout_toStartOf="@+id/group_messageImage"
                 android:src="@drawable/ic_documents" />
 
             <ImageView
@@ -144,26 +154,57 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_toEndOf="@+id/group_messageDocument"
+                android:layout_marginEnd="5dp"
+                android:layout_toStartOf="@+id/groupTextMessageSend"
                 android:src="@drawable/ic_image" />
 
+            <ImageButton
+                android:id="@+id/groupTextMessageSend"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/send_message"
+                android:background="@drawable/message_send_background"
+                android:src="@drawable/ic_send_mail" />
 
         </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/groupTextMessageSend"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/groupBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#E5F2FE"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rosario_bold"
+            android:textSize="16sp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:elevation="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@+id/messageBox"
-            android:contentDescription="@string/send_message"
-            android:background="@drawable/message_send_background"
-            android:src="@drawable/ic_send_mail" />
+            android:layout_marginStart="15dp"
+            android:text="@string/this_group_is_for_college_purpose"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/animeTest"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:text="@string/request"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:fontFamily="@font/rosario"
+            android:background="@drawable/ic_login_button_background"
+            android:padding="2dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

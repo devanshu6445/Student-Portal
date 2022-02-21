@@ -2,8 +2,14 @@ package com.college.portal.studentportal.ui.group_message
 
 import android.content.Intent
 import android.os.Bundle
+import android.transition.Fade
 import android.util.Log
+import android.view.ViewAnimationUtils
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -15,6 +21,8 @@ import com.college.portal.studentportal.adapter.GroupMessageAdapter
 import com.college.portal.studentportal.data.model.GroupMessageData
 import com.college.portal.studentportal.databinding.ActivityGroupMessageBinding
 import com.college.portal.studentportal.ui.dashboard.DashboardFragment
+import com.college.portal.studentportal.ui.group_details.GroupDetails
+import kotlin.math.hypot
 
 class GroupMessageActivity : AppCompatActivity() {
 
@@ -28,12 +36,6 @@ class GroupMessageActivity : AppCompatActivity() {
         )
         setContentView(binding!!.root)
         supportActionBar?.hide()
-        /*setSupportActionBar(binding?.groupMessageToolbar)
-        supportActionBar?.apply {
-            title = ""
-            setDisplayHomeAsUpEnabled(true)
-        }*/
-
         val groupMessageViewModel = ViewModelProvider(this,GroupMessageViewModelFactory())
             .get(GroupMessageViewModel::class.java)
 
@@ -48,9 +50,32 @@ class GroupMessageActivity : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = groupMessageAdapter
 
+        binding?.groupTitle?.setOnClickListener {
+            startActivity(Intent(this@GroupMessageActivity,GroupDetails::class.java))
+        }
+        //animation test START -------------------
+
+        val messageBoxParent = binding!!.messageBoxParent
+
+        binding?.animeTest?.setOnClickListener {
+            val finalRadius = hypot((messageBoxParent.width/2).toDouble(),(messageBoxParent.height/2).toDouble()).toFloat()
+            val animation = ViewAnimationUtils.createCircularReveal(messageBoxParent,
+                messageBoxParent.width,
+                messageBoxParent.height/2,
+                0f,
+                (messageBoxParent.width).toFloat()
+            ).apply {
+                duration = 700
+                interpolator = AccelerateDecelerateInterpolator()
+            }
+            binding!!.groupBottomBar.isVisible = false
+            messageBoxParent.isVisible = true
+            animation.start()
+        }
+        //animation test END ----------------------
+
         binding?.groupMessageToolbar?.setOnClickListener {
             onBackPressed()
-        // startActivity(Intent(this@GroupMessageActivity,StudentMain::class.java))
         }
 
         groupMessageViewModel.groupMessageList.observe(this, Observer{
