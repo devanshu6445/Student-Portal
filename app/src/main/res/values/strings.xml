@@ -23,5 +23,32 @@
     <string name="search">Search</string>
     <string name="profile_image">Profile Image</string>
     <string name="send_message">Send Message</string>
+    <string name="request">Request</string>
+    <string name="type_a_message">Type a message...</string>
+    <string name="this_group_is_for_college_purpose">This group is for college purpose.</string>
+    <string name="title_activity_group_details">GroupDetails</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="edit">Edit</string>
+    <string name="group_info">Group Info</string>
+    <string name="admin">Admin</string>
+    <string name="moderator">Moderator</string>
+    <string name="teacher">Teacher</string>
+    <string name="ban_the_user">Ban the student</string>
+    <string name="show_profile">Show profile</string>
+    <string name="promote">Promote</string>
+    <string name="demote">Demote</string>
+    <string name="options">Options</string>
+    <string name="send_documents">Send Documents</string>
+    <string name="send_image">Send Image</string>
+    <string name="message_requests">Message Requests</string>
+    <string name="demote_yourself">Demote Yourself</string>
+    <string name="reject">Reject</string>
 
 </resources>

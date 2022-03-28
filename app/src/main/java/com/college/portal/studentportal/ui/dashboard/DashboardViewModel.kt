@@ -5,49 +5,66 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.college.portal.studentportal.callback.FirebaseGDFCompleteListener
-import com.college.portal.studentportal.data.GroupRepository
-import com.college.portal.studentportal.data.model.BasicGroupData
-import com.college.portal.studentportal.data.model.LoggedInUser
+import androidx.lifecycle.viewModelScope
+import com.college.portal.studentportal.roomDatabase.groups.BasicGroupData
+import com.college.portal.studentportal.roomDatabase.groups.GroupDatabase
+import com.college.portal.studentportal.roomDatabase.user.CurrentUserDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class DashboardViewModel(val preferences: SharedPreferences?) : ViewModel(),FirebaseGDFCompleteListener {
+class DashboardViewModel(
 
-    private val _groupList = MutableLiveData<MutableList<BasicGroupData>>()
+    preferences: SharedPreferences?,
+    private val currentUserDatabase: CurrentUserDatabase,
+    private val groupDatabase: GroupDatabase
+
+    ) : ViewModel() {
+
+    private var _groupList: MutableLiveData<MutableList<BasicGroupData>> = MutableLiveData()
     private val groupRepository = GroupRepository()
-    private lateinit var loggedInUser: LoggedInUser
+    val groupList: MutableLiveData<MutableList<BasicGroupData>> = MutableLiveData()
+    private val isLoaded: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
+    val v = viewModelScope.launch {
+        groupDatabase.getGroupDao().getAllGroup().collect {
+            withContext(Dispatchers.Main){
+                groupList.value = it
+            }
+        }
+    }
 
     companion object{
-        private val TAG = "DashboardViewModel"
+        private const val TAG = "DashboardViewModel"
     }
 
     init {
         retrieveGroup()
     }
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
-    }
-    val text: LiveData<String> = _text
-    val groupList:LiveData<MutableList<BasicGroupData>> = _groupList
 
-    private fun retrieveGroup(){
-        loggedInUser = preferences?.let {
-                LoggedInUser(
-                    it.getString("uid","student")!!,
-                    it.getString("displayName","uid")!!,
-                    it.getString("role","uid")!!,
-                    it.getString("lastLoginTime","uid")!!,
-                    it.getString("semester","uid")!!
-                )
-        }!!
-        Log.d(TAG, "retrieveGroup: loggedInUserObject -> ${loggedInUser.semester + loggedInUser.role}")
-        groupRepository.retrieveGroupsRDatabase(this,loggedInUser)
-    }
+    private fun loadGroup(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val groupDao = groupDatabase.getGroupDao()
 
-    override fun onFetchComplete(groupDataList: MutableList<BasicGroupData>) {
-        _groupList.apply {
-            value=groupDataList
+            withContext(Dispatchers.Main){
+                isLoaded.value = true
+                Log.d(TAG,"value set ${isLoaded.value}")
+            }
         }
     }
 
+
+    private fun retrieveGroup(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val currentUserEntity = currentUserDatabase.getCurrentUserDao().getCurrentUser()
+            groupRepository.retrieveGroupsRDatabase(database = groupDatabase,currentUserEntity)
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        groupRepository.deRegister()
+        System.gc()
+    }
 
 }

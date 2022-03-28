@@ -1,36 +1,29 @@
 package com.college.portal.studentportal.ui.login;
 
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
 import android.content.SharedPreferences;
 import android.util.Patterns;
 
-import com.college.portal.studentportal.callback.FirebaseAuthCompleteListener;
-import com.college.portal.studentportal.data.LoginRepository;
-import com.college.portal.studentportal.data.Result;
-import com.college.portal.studentportal.data.model.LoggedInUser;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
 import com.college.portal.studentportal.R;
-import com.college.portal.studentportal.roomDatabase.UserDao;
-import com.college.portal.studentportal.roomDatabase.UsersDatabase;
-import com.college.portal.studentportal.roomDatabase.UsersInfo;
-import com.google.firebase.firestore.auth.User;
+import com.college.portal.studentportal.callback.FirebaseAuthCompleteListener;
+import com.college.portal.studentportal.data.model.LoggedInUser;
+import com.college.portal.studentportal.roomDatabase.user.CurrentUserDatabase;
 
 public class LoginViewModel extends ViewModel implements FirebaseAuthCompleteListener {
 
-    private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
-    private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
-    private LoginRepository loginRepository;
-    private SharedPreferences preferences;
-    private UsersDatabase usersDatabase;
+    private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
+    private final MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
+    private final LoginRepository loginRepository;
+    private final SharedPreferences preferences;
+    private final CurrentUserDatabase userDatabase;
 
-
-    LoginViewModel(LoginRepository loginRepository,SharedPreferences preferences,UsersDatabase usersDatabase) {
+    LoginViewModel(LoginRepository loginRepository, SharedPreferences preferences, CurrentUserDatabase userDatabase) {
         this.loginRepository = loginRepository;
         this.preferences = preferences;
-        this.usersDatabase = usersDatabase;
+        this.userDatabase = userDatabase;
     }
-
 
     MutableLiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
@@ -42,7 +35,7 @@ public class LoginViewModel extends ViewModel implements FirebaseAuthCompleteLis
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        loginRepository.login(username,password,this);
+        loginRepository.login(username,password,this,userDatabase);
     }
 
     public void loginDataChanged(String username, String password) {
@@ -75,26 +68,19 @@ public class LoginViewModel extends ViewModel implements FirebaseAuthCompleteLis
     @Override
     public void onAuthComplete(Result<LoggedInUser> result) {
         LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-        loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+
+        loginResult.setValue(new LoginResult(new LoggedInUserView(data.getUserName())));
         saveUserData(data);
 
     }
 
     private void saveUserData(LoggedInUser loggedInUser){
-        /*UserDao userDao = usersDatabase.getUserDao();
-        Thread thread = new Thread(() ->
-                userDao.insertJava(new UsersInfo(
-                        loggedInUser.getUserId(),
-                        loggedInUser.getDisplayName(),
-                        loggedInUser.getRole(),
-                        loggedInUser.getLastLogin())));
-        thread.start();*/
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("uid",loggedInUser.getUserId());
-        editor.putString("displayName",loggedInUser.getDisplayName());
+        editor.putString("uid",loggedInUser.getUserUid());
+        editor.putString("displayName",loggedInUser.getUserName());
         editor.putString("role",loggedInUser.getRole());
-        editor.putString("lastLoginTime",loggedInUser.getLastLogin());
-        editor.putString("semester",loggedInUser.getSemester());
+        editor.putLong("lastLoginTime",loggedInUser.getLastLogin());
+        editor.putString("semester",loggedInUser.getUserSemester());
         editor.apply();
 
     }

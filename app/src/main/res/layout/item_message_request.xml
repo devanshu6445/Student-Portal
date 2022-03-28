@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:layout_marginBottom="5dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/requesterName"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/rosario_bold"
+        android:textSize="18sp"
+        android:textColor="#747272"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Devanshu Pathsariya" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/requesterProfileImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Rounded"
+        android:src="@drawable/googleg_standard_color_18"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/requestMessage"
+        android:layout_width="241dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/rosario"
+        android:text="Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+        android:textColor="#9B9090"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/requestAttachments"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/requesterName"
+        app:layout_constraintTop_toBottomOf="@+id/requesterName" />
+
+    <ImageView
+        android:id="@+id/requestAttachments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_attach_file_24"
+        app:layout_constraintBottom_toBottomOf="@+id/requestMessage"
+        app:layout_constraintEnd_toStartOf="@+id/requesterProfileImage"
+        app:layout_constraintTop_toTopOf="@+id/requestMessage" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/requesterProfileImage"
+        app:layout_constraintStart_toStartOf="@+id/requestMessage"
+        app:layout_constraintTop_toBottomOf="@+id/requestMessage">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/approveRequest"
+            android:layout_width="85dp"
+            android:layout_height="30dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="Approve"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/rejectRequest"
+            android:layout_width="85dp"
+            android:layout_height="30dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/reject"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="?attr/materialButtonOutlinedStyle"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

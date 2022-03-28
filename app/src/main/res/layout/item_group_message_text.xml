@@ -2,18 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="275dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:layout_height="wrap_content">
+    android:paddingEnd="50dp"
+    android:layout_marginBottom="5dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/textMessage_senderImage"
         android:layout_width="34dp"
         android:layout_height="34dp"
         android:contentDescription="@string/profile_image"
-        android:elevation="1dp"
-        android:outlineProvider="bounds"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Rounded"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -49,6 +48,7 @@
         android:paddingEnd="10dp"
         android:paddingBottom="7dp"
         android:textColor="@color/white"
-        tools:text="What should we do then ?ddddd ddddddddddddddddddddddddddddddddddddddddddddd" />
+        android:textSize="16sp"
+        tools:text="Hi guys, I am the developer of this app i am currently developing this app" />
 
 </RelativeLayout>

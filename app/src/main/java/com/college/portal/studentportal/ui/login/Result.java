@@ -1,4 +1,6 @@
-package com.college.portal.studentportal.data;
+package com.college.portal.studentportal.ui.login;
+
+import com.college.portal.studentportal.data.model.LoggedInUser;
 
 /**
  * A generic class that holds a result success w/ data or an error exception.
@@ -21,7 +23,7 @@ public class Result<T> {
     }
 
     // Success sub-class
-    public final static class Success<T> extends Result {
+    public final static class Success<T> extends Result<T> {
         private T data;
 
         public Success(T data) {

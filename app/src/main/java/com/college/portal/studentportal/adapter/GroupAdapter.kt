@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.college.portal.studentportal.ui.group_message.GroupMessageActivity
 import com.college.portal.studentportal.R
-import com.college.portal.studentportal.data.model.BasicGroupData
+import com.college.portal.studentportal.roomDatabase.groups.BasicGroupData
 
 class GroupAdapter(var context:Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -31,7 +31,10 @@ class GroupAdapter(var context:Context) : RecyclerView.Adapter<RecyclerView.View
         groupPurpose(groupViewHolder.groupPurpose, groupData)
         lastGroupMessage(groupViewHolder.groupLastPost,groupViewHolder.groupLastPostTime,groupData)
         holder.itemView.setOnClickListener {
-            context.startActivity(Intent(context, GroupMessageActivity::class.java))
+            context.startActivity(Intent(context, GroupMessageActivity::class.java).apply {
+                putExtra("group-data",groupData)
+                putExtra("start-flag",true)
+            })
         }
     }
 
@@ -41,7 +44,7 @@ class GroupAdapter(var context:Context) : RecyclerView.Adapter<RecyclerView.View
 
     private fun lastGroupMessage(lastPost:TextView,
                                  lastPostTime: TextView,
-                                 groupDataToLoad:BasicGroupData
+                                 groupDataToLoad: BasicGroupData
     ){
         //TODO: Not yet implemented
     }
@@ -54,9 +57,9 @@ class GroupAdapter(var context:Context) : RecyclerView.Adapter<RecyclerView.View
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(groupUpdateList: MutableList<BasicGroupData>){
+    fun updateList(groupUpdateList: List<BasicGroupData>){
         groupList.clear()
-        groupList = groupUpdateList
+        groupList.addAll(groupUpdateList)
         notifyDataSetChanged()
     }
 

@@ -1,6 +1,6 @@
 package com.college.portal.studentportal.callback
 
-import com.college.portal.studentportal.data.model.BasicGroupData
+import com.college.portal.studentportal.roomDatabase.groups.BasicGroupData
 
 interface FirebaseGDFCompleteListener {
 

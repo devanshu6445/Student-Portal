@@ -1,7 +1,6 @@
 package com.college.portal.studentportal.adapter
 
 import android.annotation.SuppressLint
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,9 +14,8 @@ import com.college.portal.studentportal.R
 import com.college.portal.studentportal.data.model.GroupMessageData
 import com.google.android.material.imageview.ShapeableImageView
 
-class GroupMessageAdapter(private val context:Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class GroupMessageAdapter(private val context:Context, private val messageList1: MutableList<GroupMessageData>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var messageList1 = mutableListOf<GroupMessageData>()
 
     companion object{
         private const val MESSAGE_IMAGE_VIEW = 1
@@ -36,14 +34,15 @@ class GroupMessageAdapter(private val context:Context): RecyclerView.Adapter<Rec
         }
     }
 
+
     @SuppressLint("NotifyDataSetChanged")
-    fun updateMessageList(messageList: MutableList<GroupMessageData>){
-        messageList1 = messageList
+    fun updateMessageList(messageList: List<GroupMessageData>){
+        messageList1.clear()
+        messageList1.addAll(messageList)
         notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.setIsRecyclable(false)
         if (holder is ImageMessageViewHolder){
             loadImageMessageContent(holder,position)
         } else if (holder is TextMessageViewHolder) {

@@ -1,4 +1,4 @@
-package com.college.portal.studentportal.data;
+package com.college.portal.studentportal.ui.login;
 
 import com.college.portal.studentportal.data.model.LoggedInUser;
 
@@ -19,7 +19,7 @@ public class LoginDataSource {
                             "Jane Doe",
                             "Student",
                             "today",
-                            "1");
+                            11,"");
             return new Result.Success<>(fakeUser);
         } catch (Exception e) {
             return new Result.Error(new IOException("Error logging in", e));

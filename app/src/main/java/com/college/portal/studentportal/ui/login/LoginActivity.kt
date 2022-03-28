@@ -14,12 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.college.portal.studentportal.R
 import com.college.portal.studentportal.StudentMain
 import com.college.portal.studentportal.databinding.ActivityLoginBinding
-import com.college.portal.studentportal.roomDatabase.UsersDatabase
-import com.college.portal.studentportal.roomDatabase.UsersInfo
+import com.college.portal.studentportal.roomDatabase.user.CurrentUserDatabase
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,10 +31,13 @@ class LoginActivity : AppCompatActivity() {
 
         setContentView(binding!!.root)
         supportActionBar?.hide()
-
+        val database = CurrentUserDatabase.getDatabase(applicationContext)
         val preferences = getSharedPreferences("userData", MODE_PRIVATE)
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory(preferences, UsersDatabase.getDatabase(applicationContext)))
-            .get(LoginViewModel::class.java)
+        loginViewModel = ViewModelProvider(this,
+            LoginViewModelFactory(
+                preferences, database
+            )
+        ).get(LoginViewModel::class.java)
         val usernameEditText: EditText? = binding!!.userEmail
         val passwordEditText: EditText? = binding!!.userPassword
         val loginButton = binding!!.login

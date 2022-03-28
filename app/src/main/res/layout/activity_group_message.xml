@@ -7,136 +7,129 @@
     android:layout_height="match_parent"
     tools:context=".ui.group_message.GroupMessageActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/group_message_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#E5F2FE"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStartWithNavigation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back_arrow">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/group_message_toolbar"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#E5F2FE"
-            app:contentInsetStartWithNavigation="0dp"
-            app:contentInsetLeft="0dp"
-            app:contentInsetRight="0dp"
-            app:navigationIcon="@drawable/ic_back_arrow">
+            tools:layout_marginStart="-20dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:layout_marginStart="-20dp">
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/group_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/shutterstock_1137339098"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Rounded" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/group_image"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:scaleType="centerCrop"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Rounded"
-                    android:src="@drawable/shutterstock_1137339098" />
+            <LinearLayout
+                android:id="@+id/groupTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/group_image"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/group_image"
-                    android:orientation="vertical">
+                <TextView
+                    android:layout_width="165dp"
+                    android:layout_height="17dp"
+                    android:fontFamily="@font/rosario_bold"
+                    android:text="Android Development"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
-                    <TextView
-                        android:layout_width="165dp"
-                        android:layout_height="17dp"
-                        android:fontFamily="@font/rosario_bold"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:text="Android Development" />
+                <TextView
+                    android:layout_width="85dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/rosario"
+                    android:text="For students"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="85dp"
-                        android:layout_height="15dp"
-                        android:layout_marginTop="5dp"
-                        android:fontFamily="@font/rosario"
-                        android:textSize="14sp"
-                        android:text="For students" />
-                </LinearLayout>
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_vector__1_" />
+            <ImageButton
+                android:id="@+id/optionMenu"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/options"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_three_dots" />
             </RelativeLayout>
 
-        </androidx.appcompat.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerView_groupMessage"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/RecyclerView_groupMessage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
-            tools:itemCount="10"
-            tools:listitem="@layout/item_group_message_text" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </RelativeLayout>
+        app:layout_constraintTop_toBottomOf="@+id/group_message_toolbar"
+        app:layout_constraintVertical_bias="0.0"
+        tools:itemCount="8"
+        tools:listitem="@layout/item_group_message_text" />
 
     <RelativeLayout
         android:id="@+id/messageBoxParent"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
+        tools:visibility="visible"
         app:layout_constraintStart_toStartOf="parent">
 
         <RelativeLayout
-            android:elevation="5dp"
             android:id="@+id/messageBox"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/message_edit_text_background">
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/message_edit_text_background"
+            android:elevation="5dp">
 
             <EditText
                 android:id="@+id/groupMessageTextView"
-                android:layout_width="168dp"
-                android:layout_height="40dp"
+                android:layout_width="218dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/group_messageDocument"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/rosario_bold"
-                android:hint="Type a message..." />
+                android:hint="@string/type_a_message"
+                android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/group_messageDocument"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@id/groupMessageTextView"
+                android:contentDescription="@string/send_documents"
+                android:layout_marginEnd="15dp"
+                android:layout_toStartOf="@+id/group_messageImage"
                 android:src="@drawable/ic_documents" />
 
             <ImageView
@@ -144,26 +137,61 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_toEndOf="@+id/group_messageDocument"
+                android:layout_marginEnd="5dp"
+                android:layout_toStartOf="@+id/groupTextMessageSend"
+                android:contentDescription="@string/send_image"
                 android:src="@drawable/ic_image" />
 
+            <ImageButton
+                android:id="@+id/groupTextMessageSend"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/message_send_background"
+                android:contentDescription="@string/send_message"
+                android:src="@drawable/ic_send_mail" />
 
         </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/groupTextMessageSend"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/groupBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#E5F2FE"
+        tools:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rosario"
+            android:textSize="16sp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:elevation="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@+id/messageBox"
-            android:contentDescription="@string/send_message"
-            android:background="@drawable/message_send_background"
-            android:src="@drawable/ic_send_mail" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="15dp"
+            android:text="@string/this_group_is_for_college_purpose"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/animeTest"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:text="@string/request"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            android:fontFamily="@font/rosario"
+            android:background="@drawable/ic_login_button_background"
+            android:padding="2dp"
+            app:layout_constraintEnd_toEndOf="parent"/>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

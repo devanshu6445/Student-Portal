@@ -46,4 +46,19 @@
         <item name="cornerSizeTopLeft">15dp</item>
 
     </style>
+    <style name="ShapeAppearance.App.RoundedGroupDetails" parent="">
+
+        <item name="cornerSizeTopRight">50dp</item>
+        <item name="cornerSizeBottomLeft">50dp</item>
+        <item name="cornerSizeBottomRight">50dp</item>
+        <item name="cornerSizeTopLeft">50dp</item>
+
+    </style>
+    <style name="Theme.StudentPortal.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.StudentPortal.AppBarOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.StudentPortal.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
