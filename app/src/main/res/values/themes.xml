@@ -15,6 +15,14 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.StudentPortal.SplashActivity" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Status bar color. -->
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+
+        <!-- Customize your theme here. -->
+    </style>
+
     <style name="Theme.StudentPortal.Message" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
@@ -46,6 +54,14 @@
         <item name="cornerSizeTopLeft">15dp</item>
 
     </style>
+
+    <style name="ShapeAppearance.App.RoundedDP" parent="">
+
+        <item name="cornerSizeTopRight">30dp</item>
+        <item name="cornerSizeBottomLeft">30dp</item>
+
+        <item name="cornerSizeTopLeft">30dp</item>
+    </style>
     <style name="ShapeAppearance.App.RoundedGroupDetails" parent="">
 
         <item name="cornerSizeTopRight">50dp</item>
@@ -61,4 +77,17 @@
     <style name="Theme.StudentPortal.AppBarOverlay"
         parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.StudentPortal.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="popup_window_animation_phone">
+        <item name="android:windowEnterAnimation">@anim/modal_in</item>
+        <item name="android:windowExitAnimation">@anim/modal_out</item>
+
+    </style>
+
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.App.Button</item>
+    </style>
 </resources>

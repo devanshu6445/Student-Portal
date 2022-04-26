@@ -1,6 +1,5 @@
 package com.college.portal.studentportal.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,14 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.college.portal.studentportal.ui.group_message.GroupMessageActivity
+import com.bumptech.glide.Glide
 import com.college.portal.studentportal.R
 import com.college.portal.studentportal.roomDatabase.groups.BasicGroupData
+import com.college.portal.studentportal.ui.dashboard.GroupDiffUtilCallback
+import com.college.portal.studentportal.ui.group_message.GroupMessageActivity
+import kotlinx.coroutines.*
 
 class GroupAdapter(var context:Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var groupList = mutableListOf<BasicGroupData>()
+    private val ioScope = CoroutineScope(Dispatchers.IO + Job())
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val groupView = LayoutInflater.from(parent.context).inflate(R.layout.groups_item,parent,false)
         return GroupViewHolder(groupView)
@@ -25,9 +29,10 @@ class GroupAdapter(var context:Context) : RecyclerView.Adapter<RecyclerView.View
         val groupData = groupList[position]
         val groupViewHolder:GroupViewHolder = holder as GroupViewHolder
         groupViewHolder.groupName.text = groupData.groupName
-        /*Glide.with(context)
-                .load(groupData.groupImage)
-                .into(groupViewHolder.groupImage)*/
+        Glide.with(context)
+            .load(groupData.groupImage)
+            .error(R.drawable.googleg_standard_color_18)
+            .into(groupViewHolder.groupImage)
         groupPurpose(groupViewHolder.groupPurpose, groupData)
         lastGroupMessage(groupViewHolder.groupLastPost,groupViewHolder.groupLastPostTime,groupData)
         holder.itemView.setOnClickListener {
@@ -49,27 +54,33 @@ class GroupAdapter(var context:Context) : RecyclerView.Adapter<RecyclerView.View
         //TODO: Not yet implemented
     }
     private fun groupPurpose(groupPurpose:TextView,basicGroupData: BasicGroupData){
-        if (basicGroupData.groupPurpose.equals("college"))
+        if (basicGroupData.groupPurpose == "college")
             groupPurpose.text = groupPurpose.context.getString(R.string.purpose_college)
         else
             groupPurpose.text = groupPurpose.context.getString(R.string.purpose_student)
 
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun updateList(groupUpdateList: List<BasicGroupData>){
-        groupList.clear()
-        groupList.addAll(groupUpdateList)
-        notifyDataSetChanged()
+        val obj = this
+        ioScope.launch {
+            val groupDiffUtilCallback = GroupDiffUtilCallback(groupList,groupUpdateList)
+            val result = DiffUtil.calculateDiff(groupDiffUtilCallback)
+            groupList.clear()
+            groupList.addAll(groupUpdateList)
+            withContext(Dispatchers.Main){
+                result.dispatchUpdatesTo(obj)
+            }
+        }
     }
 
     class GroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
-        val groupImage : ImageView = itemView.findViewById<ImageView>(R.id.group_image)
-        val groupName: TextView = itemView.findViewById<TextView>(R.id.group_name)
-        val groupLastPost : TextView = itemView.findViewById<TextView>(R.id.lastPost)
-        val groupPurpose : TextView = itemView.findViewById<TextView>(R.id.groupPurpose)
-        val groupLastPostTime : TextView = itemView.findViewById<TextView>(R.id.lastPostTime)
+        val groupImage : ImageView = itemView.findViewById(R.id.group_image)
+        val groupName: TextView = itemView.findViewById(R.id.group_name)
+        val groupLastPost : TextView = itemView.findViewById(R.id.lastPost)
+        val groupPurpose : TextView = itemView.findViewById(R.id.groupPurpose)
+        val groupLastPostTime : TextView = itemView.findViewById(R.id.lastPostTime)
 
     }
 

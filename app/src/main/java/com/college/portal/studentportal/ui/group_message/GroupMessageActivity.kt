@@ -16,10 +16,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.college.portal.studentportal.extensionFunctions.getName
 
 import com.college.portal.studentportal.R
+import com.college.portal.studentportal.WrapContentLinearLayoutManager
 import com.college.portal.studentportal.adapter.GroupMessageAdapter
 import com.college.portal.studentportal.databinding.ActivityGroupMessageBinding
 import com.college.portal.studentportal.roomDatabase.groupEverything.GroupMessageDatabase
@@ -28,12 +29,19 @@ import com.college.portal.studentportal.roomDatabase.user.CurrentUserDatabase
 import com.college.portal.studentportal.ui.groupMessageRequest.MessageRequestsActivity
 import com.college.portal.studentportal.ui.group_participant_details.GroupDetails
 
+/**
+ * This activity will be used to show ,send the message of any other message related work (not message request)
+ */
 class GroupMessageActivity : AppCompatActivity() {
 
     private var binding: ActivityGroupMessageBinding? = null
     private lateinit var groupMessageAdapter: GroupMessageAdapter
     private lateinit var groupMessageViewModel: GroupMessageViewModel
     private lateinit var groupData:BasicGroupData
+    
+    companion object{
+        private const val TAG = "GroupMessageActivity: "
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +51,8 @@ class GroupMessageActivity : AppCompatActivity() {
         groupData = intent.getSerializableExtra("group-data") as BasicGroupData
         setContentView(binding!!.root)
         supportActionBar?.hide()
+        val sendTextMessage = binding!!.groupTextMessageSend
+        val groupTextMessage = binding!!.groupMessageTextView
         val database = GroupMessageDatabase.createDatabase(applicationContext,groupData.groupID)
         val currentUserDatabase = CurrentUserDatabase.getDatabase(applicationContext)
         groupMessageViewModel =
@@ -50,9 +60,10 @@ class GroupMessageActivity : AppCompatActivity() {
                 this,
                 GroupMessageViewModelFactory(groupData, database, currentUserDatabase)
             )[GroupMessageViewModel::class.java]
-
-        val layoutManager = LinearLayoutManager(applicationContext).apply {
-            stackFromEnd = true
+        binding?.groupName?.text = groupData.groupName
+        val layoutManager = WrapContentLinearLayoutManager(applicationContext).apply {
+            stackFromEnd = false
+            reverseLayout = true
         }
         val recyclerView = findViewById<RecyclerView>(R.id.RecyclerView_groupMessage)
         recyclerView.apply {
@@ -61,13 +72,19 @@ class GroupMessageActivity : AppCompatActivity() {
         val getImage = registerForActivityResult(
             ActivityResultContracts.GetContent()
         ) {
-            groupMessageViewModel.sendMessage(it)
+            try {
+                val mimeType = contentResolver.getType(it)
+                val name = it.getName(applicationContext)
+                groupMessageViewModel.sendMessage(name,
+                    it,
+                    mimeType?:throw java.lang.NullPointerException()
+                )
+            } catch (e: NullPointerException) {
+                Toast.makeText(this, "Sorry, couldn't identify the type of selected file please select the file again", Toast.LENGTH_SHORT).show()
+            }
         }
-        val sendTextMessage = binding!!.groupTextMessageSend
-        val groupTextMessage = binding!!.groupMessageTextView
 
         recyclerView.layoutManager = layoutManager
-
 
         binding?.groupTitle?.setOnClickListener {
             startActivity(Intent(this@GroupMessageActivity, GroupDetails::class.java).apply {
@@ -78,10 +95,14 @@ class GroupMessageActivity : AppCompatActivity() {
         val imageButton = binding!!.optionMenu
 
         imageButton.setOnClickListener {
+            Toast.makeText(this, "${groupMessageViewModel.currentParticipant?.banTime}", Toast.LENGTH_SHORT).show()
+            if(groupMessageViewModel.currentParticipant?.banTime?.toInt() != 0){
+                Toast.makeText(this, "You have been banned from sending messages.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             when(groupMessageViewModel.currentParticipant?.role){
                 "admin" ->{
                     if (binding?.messageBoxParent != null) {
-                        Toast.makeText(this,"Okay!",Toast.LENGTH_SHORT).show()
                         createOptionMenuForStudent(
                             R.menu.participants_menu_for_teacher,
                             imageButton,
@@ -89,7 +110,6 @@ class GroupMessageActivity : AppCompatActivity() {
                             applicationContext,
                             binding!!.groupBottomBar
                         )
-
                     }
                 }
                 "teacher" -> {
@@ -134,7 +154,12 @@ class GroupMessageActivity : AppCompatActivity() {
         binding?.groupMessageToolbar?.setNavigationOnClickListener {
             onBackPressed()
         }
-        groupMessageAdapter = GroupMessageAdapter(applicationContext, mutableListOf())
+        groupMessageAdapter = binding?.messageLoadingPB?.let {
+            GroupMessageAdapter(applicationContext, mutableListOf(),this,database,
+                it,recyclerView,
+            )
+        }!!
+
         recyclerView.adapter = groupMessageAdapter
 
         binding?.groupMessageImage?.setOnClickListener {
@@ -146,22 +171,39 @@ class GroupMessageActivity : AppCompatActivity() {
                 getImage.launch("image/*")
             }
         }
-        sendTextMessage.setOnClickListener {
-            groupMessageViewModel.sendMessage(groupTextMessage.text.toString())
+        binding?.groupMessageDocument?.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(
+                    this@GroupMessageActivity,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                getImage.launch("application/*")
+            }
         }
+        sendTextMessage.setOnClickListener {
+            groupMessageViewModel.sendMessage(groupTextMessage.text.toString(),null,"")
+        }
+
         groupMessageViewModel.groupMessageList.observe(this) {
             groupMessageAdapter.updateMessageList(it)
-            layoutManager.smoothScrollToPosition(
-                recyclerView,
-                null,
-                groupMessageAdapter.itemCount)
         }
         groupMessageViewModel.messageSent.observe(this){
             if(it){
                 Toast.makeText(this,"Message Sent",Toast.LENGTH_SHORT).show()
+                binding?.groupMessageTextView?.setText("")
             }else{
                 Toast.makeText(this,"Message not sent",Toast.LENGTH_SHORT).show()
             }
+        }
+
+        LAYOUT_INFLATER_SERVICE
+
+        binding?.scrollToLastMessage?.setOnClickListener {
+            layoutManager.smoothScrollToPosition(
+                recyclerView,
+                null,
+                groupMessageAdapter.itemCount
+            )
         }
     }
     private fun createOptionMenuForStudent(menuId: Int,
@@ -194,11 +236,16 @@ class GroupMessageActivity : AppCompatActivity() {
                     R.id.group_info -> {
                         Toast.makeText(view.context, "Group Info Clicked", Toast.LENGTH_SHORT)
                             .show()
+
                     }
 
-                    R.id.banParticipant ->{ Toast.makeText(context,"Ban Participant",Toast.LENGTH_SHORT).show()}
+                    R.id.banParticipant ->{
+                        Toast.makeText(context,"Ban Participant",Toast.LENGTH_SHORT).show()
+                    }
 
-                    R.id.show_profile -> {Toast.makeText(context,"Show Profile",Toast.LENGTH_SHORT).show()}
+                    R.id.show_profile -> {
+                        Toast.makeText(context,"Show Profile",Toast.LENGTH_SHORT).show()
+                    }
 
                     R.id.allRequests -> {
                         Toast.makeText(context,"All message requests",Toast.LENGTH_SHORT).show()
@@ -208,11 +255,17 @@ class GroupMessageActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
 
-                    R.id.demoteUser -> {Toast.makeText(context,"Demote user",Toast.LENGTH_SHORT).show()}
+                    R.id.demoteUser -> {
+                        Toast.makeText(context,"Demote user",Toast.LENGTH_SHORT).show()
+                    }
 
-                    R.id.promoteUser -> {Toast.makeText(context,"Promote User",Toast.LENGTH_SHORT).show()}
+                    R.id.promoteUser -> {
+                        Toast.makeText(context,"Promote User",Toast.LENGTH_SHORT).show()
+                    }
 
-                    R.id.demoteYourself -> {Toast.makeText(context,"Demote Yourself",Toast.LENGTH_SHORT).show()}
+                    R.id.demoteYourself -> {
+                        Toast.makeText(context,"Demote Yourself",Toast.LENGTH_SHORT).show()
+                    }
                     else -> {
                         Toast.makeText(context,"Unknown click",Toast.LENGTH_SHORT).show()
                     }

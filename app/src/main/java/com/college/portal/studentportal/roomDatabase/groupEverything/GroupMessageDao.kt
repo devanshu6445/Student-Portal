@@ -2,17 +2,20 @@ package com.college.portal.studentportal.roomDatabase.groupEverything
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.college.portal.studentportal.data.model.GroupMessageData
 import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 interface GroupMessageDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertJava(user: GroupMessageInfo)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMessage(groupMessageData: GroupMessageInfo)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+
     fun insertParticipant(participant: Participant)
 
     @Insert
@@ -24,17 +27,27 @@ interface GroupMessageDao {
     @Update
     fun updateParticipant(participant: Participant)
 
+    @Update
+    fun updateMessageRequest(messageRequest: MessageRequest)
+
+    @Update
+    fun updateMessage(groupMessageData: GroupMessageInfo)
+
+
     @Delete
     fun deleteMessage(groupMessageData: GroupMessageInfo)
 
     @Delete
     fun deleteParticipant(participant: Participant)
 
+    @Query("DELETE FROM message_requests WHERE messageID = :messageId")
+    fun removeMessageRequest(messageId: String)
+
     @Delete
-    fun removeMessageRequest(messageRequest: MessageRequest)
+    fun deleteMessageInBulk(list: List<GroupMessageInfo>)
 
     @Query("SELECT * FROM groupParticipants")
-    fun getAllParticipants(): LiveData<MutableList<Participant>>
+    fun getAllParticipants(): Flow<MutableList<Participant>>
 
     @Query("SELECT * FROM groupParticipants WHERE uid = :participantUid")
     fun searchParticipant(participantUid: String): Participant?
@@ -42,19 +55,20 @@ interface GroupMessageDao {
     @Query("SELECT * FROM groupParticipants WHERE uid = :participantUid")
     fun searchParticipantFlow(participantUid: String): Flow<Participant?>
 
-    @Query("SELECT * FROM messages")
-    fun getMessages(): Flow<MutableList<GroupMessageData>>
+    @Query("SELECT * FROM messages ORDER BY messageTimeStamp DESC")
+    fun getMessages(): Flow<MutableList<GroupMessageInfo>>
 
     @Query("SELECT * FROM messages")
-    fun getAllMessagesNotLiveData() : List<GroupMessageData>
+    fun getAllMessagesNotLiveData() : List<GroupMessageInfo>
 
     @Query("SELECT * FROM messages where messageTimeStamp like :messageTimeStamp")
     fun getMessagesNotLiveData(messageTimeStamp: Long): GroupMessageInfo?
 
     @Query("SELECT * FROM messages LIMIT 1")
-    fun getLastMessageLiveData(): LiveData<GroupMessageData>
+    fun getLastMessageLiveData(): LiveData<GroupMessageInfo>
 
     @Query("SELECT * FROM message_requests")
     fun getAllMessageRequests(): Flow<List<MessageRequest>>
+
 
 }

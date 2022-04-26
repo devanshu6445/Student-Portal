@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:id="@+id/root"
+<RelativeLayout
+    android:id="@+id/root"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,8 +11,8 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_centerVertical="true"
-        android:src="@drawable/googleg_standard_color_18"
-        android:background="@drawable/ic_group_image" />
+        android:background="@drawable/ic_group_image"
+        android:src="@drawable/googleg_standard_color_18" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,11 +25,10 @@
             android:id="@+id/group_name"
             android:layout_width="147dp"
             android:layout_height="19dp"
-            tools:text="Java Group"
-            android:textSize="16sp"
-            android:textColor="#3a3a3a"
             android:fontFamily="@font/rosario_bold"
-            />
+            android:textColor="#3a3a3a"
+            android:textSize="16sp"
+            tools:text="Java Group" />
 
         <TextView
             android:id="@+id/lastPost"
@@ -55,19 +55,21 @@
 
         <TextView
             android:id="@+id/groupPurpose"
-            android:layout_width="55dp"
-            android:layout_height="19dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/group_name"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:background="@drawable/ic_group_purpose_background"
             android:fontFamily="@font/rosario_light"
             android:gravity="center"
+            android:lineHeight="15sp"
             android:textAlignment="gravity"
             android:textColor="#68FF33"
-            android:lineHeight="15sp"
             android:textSize="12sp"
-            tools:text="Student" />
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="2dp"
+            tools:text="Moderator" />
 
     </RelativeLayout>
 

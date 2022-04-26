@@ -14,22 +14,28 @@ abstract class GroupMessageDatabase: RoomDatabase() {
 
 
     companion object{
-
         @Volatile
         private var INSTANCE: GroupMessageDatabase? = null
 
-        fun createDatabase(context: Context, databaseName: String): GroupMessageDatabase {
+        private val callback = object : RoomDatabase.Callback() {
+        }
 
-            return INSTANCE ?: synchronized(this) {
+        fun createDatabase(context: Context, databaseName: String): GroupMessageDatabase {
+            //create database instance everytime this function is called
+            return synchronized(this) {
                 val instance = Room.databaseBuilder(context.applicationContext,
                     GroupMessageDatabase::class.java,
                     databaseName)
+                    .addCallback(callback)
                     .build()
                 INSTANCE = instance
                 instance
             }
         }
 
+        /**
+         * This function will be used to get the already created database instance
+         */
         fun getDatabase(): GroupMessageDatabase = INSTANCE ?: throw SQLiteCantOpenDatabaseException("Database isn't here")
     }
 }

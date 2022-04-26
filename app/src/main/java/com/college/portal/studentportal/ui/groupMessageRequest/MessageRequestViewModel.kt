@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 
 class MessageRequestViewModel(private val database: GroupMessageDatabase,
                               private val basicGroupData: BasicGroupData): ViewModel() {
-    private val messageRequestRepository = MessageRequestRepository(database,basicGroupData)
+    private val messageRequestRepository = MessageRequestRepository.createRepo(database,basicGroupData)
     private val _messageRequestList = MutableLiveData<List<MessageRequest>>()
     val messageRequestList: LiveData<List<MessageRequest>> = _messageRequestList
 

@@ -1,18 +1,23 @@
 package com.college.portal.studentportal.ui.dashboard
 
 import android.util.Log
+import com.college.portal.studentportal.data.model.BasicGroupDataNetwork
 import com.college.portal.studentportal.data.model.LoggedInUser
 import com.college.portal.studentportal.roomDatabase.groups.BasicGroupData
 import com.college.portal.studentportal.roomDatabase.groups.GroupDatabase
-import com.google.firebase.database.*
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
-class GroupRepository {
+/**
+ * This repository is used for fetching group data such as name, groupID from network or local database
+ */
+class GroupRepository(val database: GroupDatabase) {
 
     companion object{
         private const val TAG = "GroupRepository: "
@@ -21,15 +26,18 @@ class GroupRepository {
     private val databaseReference = firebaseDatabase.reference
     private lateinit var reference: DatabaseReference
     private lateinit var childEventListener:ChildEventListener
+    private val ioScope = CoroutineScope(Dispatchers.IO + Job())
 
+    suspend fun searchGroup(textQuery: String) : List<BasicGroupData> = withContext(Dispatchers.IO){
+        return@withContext database.getGroupDao().searchAllAboutAGroup("%$textQuery%")
+    }
     fun retrieveGroupsRDatabase(
-        database: GroupDatabase,
         currentUser: LoggedInUser
     ){
-        retrieveGroupRDatabase(database,currentUser)
+        retrieveGroupRDatabase(currentUser)
     }
 
-    private fun retrieveGroupRDatabase(database:GroupDatabase,currentUSer: LoggedInUser){
+    private fun retrieveGroupRDatabase(currentUSer: LoggedInUser){
         Log.d("LoggedInUser",currentUSer.userSemester+currentUSer.userUid)
         val dao = database.getGroupDao()
 
@@ -39,27 +47,52 @@ class GroupRepository {
 
         childEventListener = reference.addChildEventListener(object: ChildEventListener{
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val groupData = snapshot.getValue<BasicGroupData>()
-                if (groupData!=null)
-                    GlobalScope.launch(Dispatchers.IO) {
-                        val g = dao.searchGroup(groupData.groupID)
+                val groupDataNetwork = snapshot.getValue<BasicGroupDataNetwork>()
+                if (groupDataNetwork!=null)
+                    ioScope.launch {
+                        val g = dao.searchGroup(groupDataNetwork.groupID)
                         if(g == null)
+                        {
+                            val groupData = BasicGroupData(
+                                    groupDataNetwork.groupName,
+                                    groupDataNetwork.groupImage,
+                                    groupDataNetwork.groupPurpose,
+                                    groupDataNetwork.groupSemester,
+                                    groupDataNetwork.groupID,""
+                                )
                             dao.insertGroup(groupData)
+                        }
                     }
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val groupData = snapshot.getValue<BasicGroupData>()
-                if (groupData!=null)
-                    GlobalScope.launch(Dispatchers.IO) {
+                val groupDataNetwork = snapshot.getValue<BasicGroupData>()
+                if (groupDataNetwork!=null)
+                    ioScope.launch {
+                        val groupData = BasicGroupData(
+                            groupDataNetwork.groupName,
+                            groupDataNetwork.groupImage,
+                            groupDataNetwork.groupPurpose,
+                            groupDataNetwork.groupSemester,
+                            groupDataNetwork.groupID,
+                            ""
+                        )
                         dao.updateGroup(groupData)
                     }
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
-                val groupData = snapshot.getValue<BasicGroupData>()
-                if (groupData!=null)
-                    GlobalScope.launch(Dispatchers.IO) {
+                val groupDataNetwork = snapshot.getValue<BasicGroupData>()
+                if (groupDataNetwork!=null)
+                    ioScope.launch {
+                        val groupData = BasicGroupData(
+                            groupDataNetwork.groupName,
+                            groupDataNetwork.groupImage,
+                            groupDataNetwork.groupPurpose,
+                            groupDataNetwork.groupSemester,
+                            groupDataNetwork.groupID,
+                            ""
+                        )
                         dao.deleteGroup(groupData)
                     }
             }

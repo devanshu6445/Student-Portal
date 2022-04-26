@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/documentMessageProfileImage"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="7dp"
+        android:outlineProvider="bounds"
+        android:layout_marginStart="10dp"
+        android:elevation="2dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Rounded"
+        android:contentDescription="@string/profile_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/documentMessageSenderName"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:gravity="center"
+        android:fontFamily="@font/rosario_bold"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="7dp"
+        android:paddingEnd="5dp"
+        android:elevation="2dp"
+        android:paddingStart="5dp"
+        android:background="@drawable/ic_sender_name_textview"
+        tools:text="Devanshu Pathsariya"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/documentMessageProfileImage"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/ic_document_message_parent_background"
+        android:elevation="2dp"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp"
+        android:paddingBottom="2dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/documentMessageSenderName"
+        app:layout_constraintTop_toBottomOf="@+id/documentMessageSenderName">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_document_message_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/documentTypeImage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:contentDescription="@string/send_documents"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_file_copy_24" />
+
+            <TextView
+                android:id="@+id/documentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/rosario"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/documentTypeImage"
+                app:layout_constraintEnd_toStartOf="@+id/documentDownload"
+                app:layout_constraintStart_toEndOf="@+id/documentTypeImage"
+                app:layout_constraintTop_toTopOf="@+id/documentTypeImage"
+                tools:text="Android Development.pdf" />
+
+            <ProgressBar
+                android:id="@+id/documentDownloadProgress"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:visibility="invisible"
+                android:indeterminate="false"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:progressDrawable="@drawable/circular_progress_bar"
+                app:layout_constraintBottom_toBottomOf="@+id/documentName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/documentName"
+                />
+
+            <ImageButton
+                android:id="@+id/documentDownload"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/send_message"
+                app:layout_constraintBottom_toBottomOf="@+id/documentName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/documentName"
+                app:srcCompat="@drawable/ic_baseline_arrow_download_24" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/documentSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/rosario"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+            tools:ignore="SmallSp"
+            tools:text="1 page . " />
+
+        <TextView
+            android:id="@+id/documentPages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:fontFamily="@font/rosario"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/documentSize"
+            app:layout_constraintStart_toEndOf="@+id/documentSize"
+            app:layout_constraintTop_toTopOf="@+id/documentSize"
+            tools:ignore="SmallSp"
+            tools:text="24.5 MB . " />
+
+        <TextView
+            android:id="@+id/documentMimeType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:fontFamily="@font/rosario"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/documentPages"
+            app:layout_constraintStart_toEndOf="@+id/documentPages"
+            app:layout_constraintTop_toTopOf="@+id/documentPages"
+            tools:ignore="SmallSp"
+            tools:text="PDF" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

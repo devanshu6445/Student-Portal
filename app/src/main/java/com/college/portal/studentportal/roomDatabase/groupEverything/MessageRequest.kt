@@ -8,47 +8,28 @@ class MessageRequest() {
 
     var senderName:String = ""
     var textMessage:String =""
-    var textMessageTime:String = ""
     var senderUid:String = ""
-    var imageURL: String = ""
-    var imageMessageTime: String = ""
-    var imageMessageCaption: String = ""
+    var docURL: String = ""
     var senderImageURL: String = ""
     var messageID: String = ""
+    var mimeType: String = ""
    @PrimaryKey(autoGenerate = false) var messageTimeStamp: Long = 0
 
     constructor(senderName:String,
                 textMessage:String,
-                textMessageTime:String,
+                docURl:String,
                 senderUid:String,
                 senderImageURL:String,
                 messageID: String,
+                mimeType:String,
                 messageTimeStamp:Long) : this() {
         this.senderName = senderName
         this.textMessage = textMessage
-        this.textMessageTime = textMessageTime
+        this.docURL = docURL
         this.senderUid = senderUid
         this.senderImageURL = senderImageURL
         this.messageID = messageID
+        this.mimeType = mimeType
         this.messageTimeStamp = messageTimeStamp
-    }
-
-    constructor(senderName:String,
-                imageURL:String,
-                imageMessageTime:String,
-                senderUid:String,
-                imageMessageCaption:String,
-                senderImageURL: String,
-                messageID: String,
-                messageTimeStamp:Long) : this() {
-        this.senderName = senderName
-        this.imageURL = imageURL
-        this.imageMessageTime = imageMessageTime
-        this.senderUid = senderUid
-        this.imageMessageCaption = imageMessageCaption
-        this.senderImageURL = senderImageURL
-        this.messageID = messageID
-        this.messageTimeStamp = messageTimeStamp
-
     }
 }

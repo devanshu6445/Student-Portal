@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
+    android:layout_marginStart="10dp"
     android:paddingEnd="50dp"
     android:layout_marginBottom="5dp">
 
@@ -13,6 +14,7 @@
         android:layout_width="34dp"
         android:layout_height="34dp"
         android:contentDescription="@string/profile_image"
+        android:layout_marginTop="5dp"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Rounded"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -25,6 +27,7 @@
         android:background="@drawable/ic_sender_name_textview"
         android:fontFamily="@font/rosario_bold"
         android:gravity="center_vertical"
+        android:layout_marginTop="5dp"
         android:outlineProvider="bounds"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
@@ -38,7 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/group_textMessage_senderName"
         android:layout_marginStart="7dp"
-        android:layout_marginTop="4dp"
+
+        android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/textMessage_senderImage"
         android:background="@drawable/ic_message_textview"
         android:fontFamily="@font/rosario_bold"

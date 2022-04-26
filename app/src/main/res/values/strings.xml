@@ -50,5 +50,12 @@
     <string name="message_requests">Message Requests</string>
     <string name="demote_yourself">Demote Yourself</string>
     <string name="reject">Reject</string>
-
+    <string name="no_message_found">No message requested. Please check attachments.</string>
+    <string name="attachment">Attachment</string>
+    <string name="groups">Groups</string>
+    <string name="profile">Profile</string>
+    <string name="no_new_message_requests">No new message requests.</string>
+    <string name="search_hint">search_hint</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

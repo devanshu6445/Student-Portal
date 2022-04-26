@@ -48,10 +48,11 @@
         app:layout_constraintStart_toStartOf="@+id/requesterName"
         app:layout_constraintTop_toBottomOf="@+id/requesterName" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/requestAttachments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:src="@drawable/ic_baseline_attach_file_24"
         app:layout_constraintBottom_toBottomOf="@+id/requestMessage"
         app:layout_constraintEnd_toStartOf="@+id/requesterProfileImage"

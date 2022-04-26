@@ -1,7 +1,5 @@
 package com.college.portal.studentportal.ui.login;
 
-import com.college.portal.studentportal.data.model.LoggedInUser;
-
 /**
  * A generic class that holds a result success w/ data or an error exception.
  */

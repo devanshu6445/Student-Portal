@@ -1,8 +1,6 @@
 package com.college.portal.studentportal.ui.dashboard
 
 import android.content.SharedPreferences
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,21 +18,23 @@ class DashboardViewModel(
     private val currentUserDatabase: CurrentUserDatabase,
     private val groupDatabase: GroupDatabase
 
-    ) : ViewModel() {
+) : ViewModel() {
 
-    private var _groupList: MutableLiveData<MutableList<BasicGroupData>> = MutableLiveData()
-    private val groupRepository = GroupRepository()
+    private val groupRepository = GroupRepository(groupDatabase)
     val groupList: MutableLiveData<MutableList<BasicGroupData>> = MutableLiveData()
-    private val isLoaded: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
     val v = viewModelScope.launch {
         groupDatabase.getGroupDao().getAllGroup().collect {
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 groupList.value = it
             }
         }
     }
 
-    companion object{
+    suspend fun searchGroupData(queryText: String): List<BasicGroupData> {
+        return groupRepository.searchGroup(queryText)
+    }
+
+    companion object {
         private const val TAG = "DashboardViewModel"
     }
 
@@ -42,22 +42,10 @@ class DashboardViewModel(
         retrieveGroup()
     }
 
-    private fun loadGroup(){
-        viewModelScope.launch(Dispatchers.IO) {
-            val groupDao = groupDatabase.getGroupDao()
-
-            withContext(Dispatchers.Main){
-                isLoaded.value = true
-                Log.d(TAG,"value set ${isLoaded.value}")
-            }
-        }
-    }
-
-
-    private fun retrieveGroup(){
+    private fun retrieveGroup() {
         viewModelScope.launch(Dispatchers.IO) {
             val currentUserEntity = currentUserDatabase.getCurrentUserDao().getCurrentUser()
-            groupRepository.retrieveGroupsRDatabase(database = groupDatabase,currentUserEntity)
+            groupRepository.retrieveGroupsRDatabase(currentUserEntity)
         }
     }
 

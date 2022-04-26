@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <com.google.android.material.imageview.ShapeableImageView
@@ -10,7 +10,8 @@
         android:layout_height="34dp"
         android:layout_marginTop="7dp"
         android:outlineProvider="bounds"
-        android:elevation="10dp"
+        android:layout_marginStart="10dp"
+        android:elevation="3dp"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Rounded"
         android:contentDescription="@string/profile_image"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,8 +25,9 @@
         android:gravity="center"
         android:fontFamily="@font/rosario_bold"
         android:layout_marginStart="7dp"
-        android:outlineProvider="bounds"
-        android:elevation="10dp"
+        android:layout_marginTop="7dp"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
         android:background="@drawable/ic_sender_name_textview"
         tools:text="Devanshu Pathsariya"
         android:textAlignment="center"
@@ -37,12 +39,17 @@
         android:id="@+id/group_imageMessage"
         android:layout_width="185dp"
         android:layout_height="125dp"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.SelectedCornerCut"
         android:layout_marginTop="7dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="7dp"
+        android:elevation="3dp"
+        android:outlineProvider="@null"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/group_imageMessage_Sender"
         app:layout_constraintTop_toBottomOf="@+id/group_imageMessage_Sender"
-        tools:srcCompat="@tools:sample/avatars"
-        />
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.SelectedCornerCut"
+        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

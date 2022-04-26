@@ -4,25 +4,16 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
+/**
+ * This class is made just to use in the local database(Room)
+ * any data fetched from network will be calculated then inserted into local database
+ * to improve the performance of app
+ */
 @Entity(tableName = "groupData")
-class BasicGroupData(): Serializable{
-
-    var groupName:String = ""
-    var groupImage:String =""
-    var groupPurpose:String = ""
-    var groupSemester:String = ""
-    @PrimaryKey(autoGenerate = false) var groupID: String = ""
-
-    constructor(groupName:String,
-                groupImage:String,
-                groupPurpose:String,
-                groupSemester:String, groupID:String) : this() {
-        this.groupName = groupName
-        this.groupImage = groupImage
-        this.groupPurpose  = groupPurpose
-        this.groupSemester  =groupSemester
-        this.groupID = groupID
-    }
-
-
-}
+class BasicGroupData(
+    val groupName:String,
+    val groupImage:String,
+    val groupPurpose:String,
+    val groupSemester:String,
+    @PrimaryKey(autoGenerate = false) val groupID: String,
+    val groupLastAnnouncement:String) : Serializable

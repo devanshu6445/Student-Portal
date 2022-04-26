@@ -1,6 +1,7 @@
 package com.college.portal.studentportal.ui.login
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,6 +17,7 @@ import com.college.portal.studentportal.StudentMain
 import com.college.portal.studentportal.databinding.ActivityLoginBinding
 import com.college.portal.studentportal.roomDatabase.user.CurrentUserDatabase
 import com.google.firebase.auth.FirebaseAuth
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog
 
 class LoginActivity : AppCompatActivity() {
 
@@ -54,16 +56,29 @@ class LoginActivity : AppCompatActivity() {
                 passwordEditText!!.error = getString(loginFormState.passwordError!!)
             }
         })
+        lateinit var dialog: SweetAlertDialog
         loginViewModel!!.loginResult.observe(this, Observer { loginResult ->
             if (loginResult == null) {
                 return@Observer
             }
             if (loginResult.error != null) {
-                showLoginFailed(loginResult.error)
+                SweetAlertDialog(this,SweetAlertDialog.ERROR_TYPE).apply {
+                    titleText = "Please try again!"
+                }.setConfirmClickListener {
+                    showLoginFailed(loginResult.error)
+                    dialog.dismiss()
+                    it.dismissWithAnimation()
+                }.show()
+
             }
             if (loginResult.success != null) {
-                startActivity(Intent(this@LoginActivity, StudentMain::class.java))
-                updateUiWithUser(loginResult.success)
+                SweetAlertDialog(this,SweetAlertDialog.SUCCESS_TYPE).apply {
+                    titleText = "You have been logged In"
+                }.setConfirmClickListener {
+                    startActivity(Intent(this@LoginActivity, StudentMain::class.java))
+                    updateUiWithUser(loginResult.success)
+                }.show()
+
             }
             setResult(RESULT_OK)
 
@@ -97,6 +112,12 @@ class LoginActivity : AppCompatActivity() {
             false
         }
         loginButton.setOnClickListener {
+            dialog = SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE).apply {
+                progressHelper.barColor = Color.parseColor("#A5DC86")
+                titleText = "Logging In"
+                setCancelable(false)
+            }
+            dialog.show()
             loginViewModel!!.login(
                 usernameEditText.text.toString(),
                 passwordEditText.text.toString()

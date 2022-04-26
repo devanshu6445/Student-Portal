@@ -13,6 +13,9 @@ interface GroupDao {
     @Query("SELECT * FROM groupData")
     fun getAllGroup(): Flow<MutableList<BasicGroupData>>
 
+    @Query("SELECT * FROM groupData WHERE groupID like :searchText OR groupName like :searchText")
+    fun searchAllAboutAGroup(searchText: String) : List<BasicGroupData>
+
     @Update
     fun updateGroup(groupData: BasicGroupData)
 

@@ -1,6 +1,8 @@
 package com.college.portal.studentportal
 
 import android.os.Bundle
+import android.view.View
+import android.view.animation.AnimationUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -24,9 +26,20 @@ class StudentMain : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_student_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            when (destination.id) {
+                R.id.navigation_dashboard, R.id.navigation_notifications -> {
+                    navView.visibility = View.VISIBLE
+                }
+                else -> {
+                    navView.visibility = View.GONE
+                }
+            }
+        }
         val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
+                R.id.navigation_dashboard, R.id.navigation_notifications))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
 }

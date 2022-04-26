@@ -42,6 +42,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/groupName"
                     android:layout_width="165dp"
                     android:layout_height="17dp"
                     android:fontFamily="@font/rosario_bold"
@@ -67,26 +68,32 @@
                 android:layout_marginEnd="15dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/options"
-                android:foreground="?android:attr/selectableItemBackground"
+                android:foreground="?android:attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_three_dots" />
             </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
+    <ProgressBar
+        android:id="@+id/messageLoadingPB"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/group_message_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/group_message_toolbar" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RecyclerView_groupMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="10dp"
-        android:paddingEnd="5dp"
-        android:paddingTop="0dp"
-        android:paddingBottom="100dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/messageBoxParent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/group_message_toolbar"
-        app:layout_constraintVertical_bias="0.0"
-        tools:itemCount="8"
-        tools:listitem="@layout/item_group_message_text" />
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@+id/messageLoadingPB"
+        tools:listitem="@layout/item_document_group_message" />
 
     <RelativeLayout
         android:id="@+id/messageBoxParent"
@@ -162,7 +169,7 @@
     <RelativeLayout
         android:id="@+id/groupBottomBar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:background="#E5F2FE"
         tools:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -193,5 +200,20 @@
             android:padding="2dp"
             app:layout_constraintEnd_toEndOf="parent"/>
     </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/scrollToLastMessage"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/RecyclerView_groupMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.946"
+        app:layout_constraintStart_toStartOf="parent"
+        android:rotation="-90"
+
+        android:src="@drawable/ic_back_arrow"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/group_message_toolbar"
+        app:layout_constraintVertical_bias="0.973" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
