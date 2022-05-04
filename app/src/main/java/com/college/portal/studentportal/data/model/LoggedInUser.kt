@@ -2,12 +2,13 @@ package com.college.portal.studentportal.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
  */
 @Entity(tableName = "currentUser")
-class LoggedInUser() {
+class LoggedInUser() : Serializable{
 
     var userUid: String = ""
     var userName: String = ""
@@ -15,6 +16,14 @@ class LoggedInUser() {
     var role: String = ""
     var lastLogin: Long = 11111
     var userSemester: String = ""
+    var userCourse: String = ""
+    var emailAddress:String = ""
+    var presentLivingAddress = ""
+    var dateOfBirth:String = ""
+    var phoneNumber:String = ""
+    var userDesignation:String = ""
+    var userSection:String = ""
+
     @PrimaryKey(autoGenerate = true) var id = 0
 
     constructor(

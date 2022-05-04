@@ -11,20 +11,31 @@ abstract class CurrentUserDatabase: RoomDatabase() {
 
     abstract fun getCurrentUserDao(): CurrentUserDao
 
+
     companion object{
 
         @Volatile
         private var INSTANCE: CurrentUserDatabase? = null
 
-        fun getDatabase(context: Context): CurrentUserDatabase {
+        fun getDatabase(context: Context,databaseName:String = "currentUserDatabase"): CurrentUserDatabase {
 
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(context.applicationContext,
-                    CurrentUserDatabase::class.java,
-                    "currentUserDatabase")
-                    .build()
-                INSTANCE = instance
-                instance
+            return if (databaseName == "currentUserDatabase"){
+                INSTANCE ?: synchronized(this) {
+                    val instance = Room.databaseBuilder(context.applicationContext,
+                        CurrentUserDatabase::class.java,
+                        "currentUserDatabase")
+                        .build()
+                    INSTANCE = instance
+                    instance
+                }
+            }else{
+                synchronized(this) {
+                    val instance = Room.databaseBuilder(context.applicationContext,
+                        CurrentUserDatabase::class.java,
+                        databaseName)
+                        .build()
+                    instance
+                }
             }
         }
     }

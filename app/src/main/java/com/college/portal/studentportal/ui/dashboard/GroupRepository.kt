@@ -44,7 +44,6 @@ class GroupRepository(val database: GroupDatabase) {
         reference = databaseReference
                 .child("groups")
                 .child("sem${currentUSer.userSemester}-details")
-
         childEventListener = reference.addChildEventListener(object: ChildEventListener{
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val groupDataNetwork = snapshot.getValue<BasicGroupDataNetwork>()

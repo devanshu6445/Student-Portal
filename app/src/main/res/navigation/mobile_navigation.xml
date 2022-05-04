@@ -26,6 +26,19 @@
             android:id="@+id/action_navigation_notifications_to_editStudentDetailsFragment"
             app:destination="@id/editStudentDetailsFragment"
             app:enterAnim="@anim/fade_in_animation" />
+        <action
+            android:id="@+id/action_navigation_notifications_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment"
+            app:enterAnim="@anim/fade_in_animation" />
+        <action
+            android:id="@+id/action_navigation_notifications_to_attendanceFragment"
+            app:destination="@id/attendanceFragment" />
+        <action
+            android:id="@+id/action_navigation_notifications_to_selectSubjectFragment"
+            app:destination="@id/selectSubjectFragment" />
+        <action
+            android:id="@+id/action_navigation_notifications_to_postAnnouncement"
+            app:destination="@id/postAnnouncement" />
     </fragment>
     <fragment
         android:id="@+id/announcementInfoFragment"
@@ -37,4 +50,52 @@
         android:name="com.college.portal.studentportal.ui.notifications.editStudentDetails.EditStudentDetailsFragment"
         android:label="edit_student_details_fragment"
         tools:layout="@layout/edit_student_details_fragment" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.college.portal.studentportal.ui.notifications.changePassword.ChangePasswordFragment"
+        android:label="change_password_fragment"
+        tools:layout="@layout/change_password_fragment" />
+    <fragment
+        android:id="@+id/attendanceFragment"
+        android:name="com.college.portal.studentportal.ui.notifications.attendanceFragment.AttendanceFragment"
+        android:label="attendance_fragment"
+        tools:layout="@layout/attendance_fragment" >
+        <action
+            android:id="@+id/action_attendanceFragment_to_studentForAttendanceFragment"
+            app:destination="@id/studentForAttendanceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentForAttendanceFragment"
+        android:name="com.college.portal.studentportal.ui.notifications.attendanceFragment.StudentForAttendanceFragment"
+        android:label="student_for_attendance_fragment"
+        tools:layout="@layout/student_for_attendance_fragment" >
+        <argument
+            android:name="subject"
+            app:argType="com.college.portal.studentportal.data.model.Subject" />
+    </fragment>
+    <fragment
+        android:id="@+id/myAttendanceFragment"
+        android:name="com.college.portal.studentportal.ui.notifications.myAttendance.MyAttendanceFragment"
+        android:label="my_attendance_fragment"
+        tools:layout="@layout/my_attendance_fragment" >
+        <argument
+            android:name="subject"
+            app:argType="com.college.portal.studentportal.data.model.Subject" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectSubjectFragment"
+        android:name="com.college.portal.studentportal.ui.notifications.myAttendance.SelectSubjectFragment"
+        android:label="SelectSubjectFragment" >
+        <action
+            android:id="@+id/action_selectSubjectFragment_to_myAttendanceFragment"
+            app:destination="@id/myAttendanceFragment" />
+        <argument
+            android:name="currentUser"
+            app:argType="com.college.portal.studentportal.data.model.LoggedInUser" />
+    </fragment>
+    <fragment
+        android:id="@+id/postAnnouncement"
+        android:name="com.college.portal.studentportal.ui.notifications.announcement.PostAnnouncement"
+        android:label="post_announcement_fragment"
+        tools:layout="@layout/post_announcement_fragment" />
 </navigation>

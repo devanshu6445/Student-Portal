@@ -35,20 +35,14 @@ import java.io.File
 class GroupMessageAdapter(
     private val context: Context,
     private var messageList1: List<GroupMessageInfo>,
-    activity: AppCompatActivity,
+    activity: AppCompatActivity, // may be a memory leak don't know
     private val database: GroupMessageDatabase,
-    messageLoadingProgressBar: ProgressBar,
-    recyclerView: RecyclerView
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val ioScope = CoroutineScope(Dispatchers.IO + Job())
     private lateinit var holder: RecyclerView.ViewHolder
     private lateinit var currentMessageObject: GroupMessageInfo
-/*
-    private val newList = mutableListOf<GroupMessageInfo>()
-    private val oldList = mutableListOf<GroupMessageInfo>()
-    private val layoutManager: LinearLayoutManager = recyclerView.layoutManager as WrapContentLinearLayoutManager
-*/
+
     private val groupMessageRepo = GroupMessageRepository.getInstance()
     private var currentParticipant: Participant? = null
 
@@ -65,12 +59,6 @@ class GroupMessageAdapter(
                 currentParticipant = it
             }
         }
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-            }
-        })
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){

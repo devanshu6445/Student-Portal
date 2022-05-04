@@ -10,7 +10,6 @@ import java.lang.IllegalStateException
 
 class DashboardViewModelFactory(
 
-    private val sharedPreferences: SharedPreferences?,
     private val currentUserDatabase: CurrentUserDatabase,
     private val groupDatabase: GroupDatabase
 
@@ -19,7 +18,7 @@ class DashboardViewModelFactory(
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(DashboardViewModel::class.java)){
-            return DashboardViewModel(sharedPreferences,currentUserDatabase,groupDatabase) as T
+            return DashboardViewModel(currentUserDatabase,groupDatabase) as T
         }
         else{
             throw IllegalStateException("Unknown ViewModel class")

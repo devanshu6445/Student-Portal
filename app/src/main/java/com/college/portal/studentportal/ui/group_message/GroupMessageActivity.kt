@@ -17,12 +17,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.college.portal.studentportal.extensionFunctions.getName
-
 import com.college.portal.studentportal.R
 import com.college.portal.studentportal.WrapContentLinearLayoutManager
 import com.college.portal.studentportal.adapter.GroupMessageAdapter
 import com.college.portal.studentportal.databinding.ActivityGroupMessageBinding
+import com.college.portal.studentportal.extensionFunctions.getName
 import com.college.portal.studentportal.roomDatabase.groupEverything.GroupMessageDatabase
 import com.college.portal.studentportal.roomDatabase.groups.BasicGroupData
 import com.college.portal.studentportal.roomDatabase.user.CurrentUserDatabase
@@ -38,10 +37,6 @@ class GroupMessageActivity : AppCompatActivity() {
     private lateinit var groupMessageAdapter: GroupMessageAdapter
     private lateinit var groupMessageViewModel: GroupMessageViewModel
     private lateinit var groupData:BasicGroupData
-    
-    companion object{
-        private const val TAG = "GroupMessageActivity: "
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -154,11 +149,8 @@ class GroupMessageActivity : AppCompatActivity() {
         binding?.groupMessageToolbar?.setNavigationOnClickListener {
             onBackPressed()
         }
-        groupMessageAdapter = binding?.messageLoadingPB?.let {
-            GroupMessageAdapter(applicationContext, mutableListOf(),this,database,
-                it,recyclerView,
-            )
-        }!!
+        groupMessageAdapter = GroupMessageAdapter(applicationContext, mutableListOf(),this,database
+        )
 
         recyclerView.adapter = groupMessageAdapter
 
@@ -276,4 +268,9 @@ class GroupMessageActivity : AppCompatActivity() {
         popupMenu.show()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+        Runtime.getRuntime().gc()
+    }
 }

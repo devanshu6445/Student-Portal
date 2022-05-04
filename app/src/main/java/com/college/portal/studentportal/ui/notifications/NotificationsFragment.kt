@@ -36,6 +36,10 @@ class NotificationsFragment : Fragment() {
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
         notificationsViewModel.loggedInUser.observe(viewLifecycleOwner){
+            when(it.userDesignation){
+                "Teacher","Admin" -> {binding.myAttendance.visibility = View.GONE}
+                "moderator","student" -> {binding.markAttendance.visibility = View.GONE}
+            }
             binding.usernameTextView.text = it.userName
             Glide.with(binding.profileCircleImageView.context)
                 .load(it.userImageUrl)
@@ -68,9 +72,21 @@ class NotificationsFragment : Fragment() {
                 }
             }
         }
-
+        binding.markAttendance.setOnClickListener {
+            root.findNavController().navigate(R.id.action_navigation_notifications_to_attendanceFragment)
+        }
         binding.editProfile.setOnClickListener {
             root.findNavController().navigate(R.id.action_navigation_notifications_to_editStudentDetailsFragment)
+        }
+        binding.changePassword.setOnClickListener {
+            root.findNavController().navigate(R.id.action_navigation_notifications_to_changePasswordFragment)
+        }
+        binding.myAttendance.setOnClickListener {
+            val action = NotificationsFragmentDirections.actionNavigationNotificationsToSelectSubjectFragment(notificationsViewModel.loggedInUser.value!!)
+            root.findNavController().navigate(action)
+        }
+        binding.announcement.setOnClickListener {
+            root.findNavController().navigate(R.id.action_navigation_notifications_to_postAnnouncement)
         }
         return root
     }

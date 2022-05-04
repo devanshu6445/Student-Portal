@@ -43,11 +43,11 @@
 
                 <TextView
                     style="@style/viewParent.headerText"
-                    android:text="Edit personal details"
-                    android:textSize="16sp"
-                    android:textColor="#5D5C5C"
                     android:layout_below="@id/usernameTextView"
-                    android:layout_toEndOf="@id/profileCircleImageView"/>
+                    android:layout_toEndOf="@id/profileCircleImageView"
+                    android:text="Edit personal details"
+                    android:textColor="#5D5C5C"
+                    android:textSize="16sp" />
 
                 <ImageView
                     style="@style/viewParent"
@@ -79,6 +79,24 @@
                 android:layout_marginTop="10dp"
                 android:text="Change Password"
                 app:drawableLeftCompat="@drawable/ic_edit_password" />
+
+            <TextView
+                android:id="@+id/mark_attendance"
+                style="@style/viewParent.headerText.settingsTextIcon"
+                android:text="Mark Attendance"
+                app:drawableLeftCompat="@drawable/ic_frame_5" />
+
+            <TextView
+                android:id="@+id/my_attendance"
+                style="@style/viewParent.headerText.settingsTextIcon"
+                android:text="My Attendance"
+                app:drawableLeftCompat="@drawable/ic_frame_5" />
+
+            <TextView
+                android:id="@+id/announcement"
+                style="@style/viewParent.headerText.settingsTextIcon"
+                android:text="Post an announcement"
+                app:drawableLeftCompat="@drawable/ic_announcement" />
 
             <TextView
                 style="@style/viewParent.headerText.settingsMiniTitle"

@@ -58,4 +58,19 @@
     <string name="search_hint">search_hint</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="birth_date">Birth Date</string>
+    <string name="present_address">Present Address</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="password_warning">Password should contain at least 8 characters!</string>
+    <string name="email_address">Email Address</string>
+    <string name="update">Update</string>
+    <string name="change_password">Change Password</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="password_change_suggestion">Your new password must be different from previously used password.</string>
+    <string name="password_change_rule">Must be at least 8 characters.</string>
+    <string name="password_change_match_warning">Both password must match.</string>
+    <string name="overall_attendance_percentage">Overall attendance percentage: </string>
+    <string name="this_month_attendance_percentage">This month attendance percentage: </string>
 </resources>

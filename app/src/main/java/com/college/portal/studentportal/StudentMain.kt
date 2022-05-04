@@ -10,10 +10,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.college.portal.studentportal.databinding.ActivityStudentMainBinding
+import com.college.portal.studentportal.roomDatabase.announcement.AnnouncementDatabase
+import com.college.portal.studentportal.ui.notifications.announcement.AnnouncementRepository
 
 class StudentMain : AppCompatActivity() {
 
     private lateinit var binding: ActivityStudentMainBinding
+    private lateinit var announcementRepository: AnnouncementRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

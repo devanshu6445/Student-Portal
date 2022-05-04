@@ -1,7 +1,5 @@
 package com.college.portal.studentportal.ui.dashboard
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -29,43 +27,33 @@ class DashboardFragment : Fragment() {
     private lateinit var dashboardViewModel: DashboardViewModel
     private var _binding: FragmentDashboardBinding? = null
     private lateinit var recyclerViewGroupAdapter: GroupAdapter
-    private lateinit var recyclerView: RecyclerView
+    private var recyclerView: RecyclerView? = null
     private val ioScope = CoroutineScope(Dispatchers.IO + Job())
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
-    companion object {
-        private const val TAG = "DashboardFragment: "
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val preferences: SharedPreferences? = activity?.let {
-            it.applicationContext.getSharedPreferences("userData", Context.MODE_PRIVATE)
-        }
-
+    ): View {
         dashboardViewModel = ViewModelProvider(
             this, DashboardViewModelFactory(
-                preferences,
                 CurrentUserDatabase.getDatabase(activity?.applicationContext!!),
                 GroupDatabase.getInstance(activity?.applicationContext!!)
             )
-        )
-            .get(DashboardViewModel::class.java)
+        )[DashboardViewModel::class.java]
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         recyclerView = root.findViewById(R.id.groupRecyclerView)
-        recyclerView.setHasFixedSize(true)
+        recyclerView?.setHasFixedSize(true)
         recyclerViewGroupAdapter = context?.let { GroupAdapter(it) }!!
         val layoutManager = WrapContentLinearLayoutManager(activity?.applicationContext!!)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = recyclerViewGroupAdapter
+        recyclerView?.layoutManager = layoutManager
+        recyclerView?.adapter = recyclerViewGroupAdapter
         binding.searchGroups.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 //no need right now
@@ -106,6 +94,8 @@ class DashboardFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        recyclerView?.adapter = null
+        recyclerView = null
     }
 
 }

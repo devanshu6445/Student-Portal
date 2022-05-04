@@ -1,6 +1,5 @@
 package com.college.portal.studentportal.ui.dashboard
 
-import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,10 +13,8 @@ import kotlinx.coroutines.withContext
 
 class DashboardViewModel(
 
-    preferences: SharedPreferences?,
     private val currentUserDatabase: CurrentUserDatabase,
     private val groupDatabase: GroupDatabase
-
 ) : ViewModel() {
 
     private val groupRepository = GroupRepository(groupDatabase)
@@ -32,10 +29,6 @@ class DashboardViewModel(
 
     suspend fun searchGroupData(queryText: String): List<BasicGroupData> {
         return groupRepository.searchGroup(queryText)
-    }
-
-    companion object {
-        private const val TAG = "DashboardViewModel"
     }
 
     init {

@@ -17,8 +17,7 @@ abstract class GroupMessageDatabase: RoomDatabase() {
         @Volatile
         private var INSTANCE: GroupMessageDatabase? = null
 
-        private val callback = object : RoomDatabase.Callback() {
-        }
+        private val callback = object : RoomDatabase.Callback() {}
 
         fun createDatabase(context: Context, databaseName: String): GroupMessageDatabase {
             //create database instance everytime this function is called
