@@ -10,7 +10,7 @@ import java.io.Serializable
 @Entity(tableName = "currentUser")
 class LoggedInUser() : Serializable{
 
-    var userUid: String = ""
+    @PrimaryKey(autoGenerate = false) var userUid: String = ""
     var userName: String = ""
     var userImageUrl: String = ""
     var role: String = ""
@@ -23,8 +23,7 @@ class LoggedInUser() : Serializable{
     var phoneNumber:String = ""
     var userDesignation:String = ""
     var userSection:String = ""
-
-    @PrimaryKey(autoGenerate = true) var id = 0
+    var rollNo:Int = 0
 
     constructor(
         userName:String,

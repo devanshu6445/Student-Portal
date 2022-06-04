@@ -15,5 +15,6 @@ class BasicGroupData(
     val groupImage:String,
     val groupPurpose:String,
     val groupSemester:String,
+    val groupCourse:String,
     @PrimaryKey(autoGenerate = false) val groupID: String,
     val groupLastAnnouncement:String) : Serializable

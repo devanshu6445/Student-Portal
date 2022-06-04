@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/relativeLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="270dp"
@@ -81,30 +81,41 @@
                     android:layout_height="100dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="35dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/sample"
+                    android:layout_marginTop="35dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.App.RoundedGroupDetails" />
 
                 <TextView
                     android:id="@+id/groupName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/groupImage"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/rosario_bold"
                     android:text="Android Development"
-                    android:textColor="#1B1A1A"
+
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textAlignment="center"
+                    android:layout_marginHorizontal="40dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/groupImage" />
 
                 <LinearLayout
                     android:id="@+id/groupMinorDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/groupName"
-                    android:layout_centerHorizontal="true">
+                    android:layout_centerHorizontal="true"
+                    app:layout_constraintEnd_toEndOf="@+id/groupName"
+                    app:layout_constraintStart_toStartOf="@+id/groupName"
+                    app:layout_constraintTop_toBottomOf="@+id/groupName">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -129,12 +140,15 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/groupMinorDetails"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
-                    android:background="#fff"
-                    android:src="@drawable/ic_baseline_search_24" />
-            </RelativeLayout>
+                    android:background="@android:color/transparent"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/ic_baseline_search_24"
+                    app:layout_constraintEnd_toEndOf="@+id/groupName"
+                    app:layout_constraintStart_toStartOf="@+id/groupName"
+                    app:layout_constraintTop_toBottomOf="@+id/groupMinorDetails" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -154,17 +168,26 @@
                     android:gravity="center"
                     android:text="Participants"
                     android:textAlignment="center"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/searchInParticipants"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="27dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="10dp"
-                    android:background="#fff" />
+                    android:gravity="end"
 
-            </RelativeLayout>
+                    android:background="@android:color/transparent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/participantsNumber"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/participantsRV"

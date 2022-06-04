@@ -12,5 +12,6 @@ data class AnnouncementEntity(
     val announcementCreator:String,
     val announcementCourse:String?,
     val announcementClass:String?,
+    val announcementUrl: String?,
     @PrimaryKey(autoGenerate = false) val announcementTimestamp: Long
 )

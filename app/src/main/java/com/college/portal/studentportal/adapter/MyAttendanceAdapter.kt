@@ -53,7 +53,7 @@ class MyAttendanceAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 }
 
-class SubjectAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class SubjectAdapter(private val uid : String): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private val mySubjectList = mutableListOf<Subject>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -68,7 +68,7 @@ class SubjectAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         viewHolder.subName.text = subject.subCode
 
         viewHolder.itemView.setOnClickListener {
-            val action = SelectSubjectFragmentDirections.actionSelectSubjectFragmentToMyAttendanceFragment(subject)
+            val action = SelectSubjectFragmentDirections.actionSelectSubjectFragmentToMyAttendanceFragment(subject,uid)
             it.findNavController().navigate(action)
         }
     }

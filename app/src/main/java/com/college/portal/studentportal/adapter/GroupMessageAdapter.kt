@@ -35,7 +35,7 @@ import java.io.File
 class GroupMessageAdapter(
     private val context: Context,
     private var messageList1: List<GroupMessageInfo>,
-    activity: AppCompatActivity, // may be a memory leak don't know
+    var activity: AppCompatActivity?, // may be a memory leak don't know
     private val database: GroupMessageDatabase,
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -138,8 +138,8 @@ class GroupMessageAdapter(
             documentMessageSenderName.text = message.senderName
             Glide.with(documentMessageProfileImage.context)
                 .load(message.senderImageURL)
-                .placeholder(R.drawable.ic_profile_placeholder)
-                .error(R.drawable.ic_profile_placeholder)
+                .placeholder(R.drawable.ic_avatar_svgrepo_com)
+                .error(R.drawable.ic_avatar_svgrepo_com)
                 .into(documentMessageProfileImage)
         }
         if (message.docURL.startsWith("http")) {
@@ -180,14 +180,14 @@ class GroupMessageAdapter(
     private fun checkAndRequestPermission(message:GroupMessageInfo,holder: DocumentMessageViewHolder){
         if(context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
         {
-            permissionResult.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            permissionResult?.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }else{
             ioScope.launch {
                 documentDownload(message,holder)
             }
         }
     }
-    private val permissionResult = activity.registerForActivityResult(ActivityResultContracts.RequestPermission()){ isGranted ->
+    private val permissionResult = activity?.registerForActivityResult(ActivityResultContracts.RequestPermission()){ isGranted ->
         val documentHolder = holder as DocumentMessageViewHolder
         if(isGranted){
             ioScope.launch {
@@ -342,8 +342,8 @@ class GroupMessageAdapter(
         textMessageViewHolder.textMessageView.text = messageData.textMessage
         Glide.with(textMessageViewHolder.profileImageSender.context)
             .load(messageData.senderImageURL)
-            .placeholder(R.drawable.ic_profile_placeholder)
-            .error(R.drawable.ic_profile_placeholder)
+            .placeholder(R.drawable.ic_avatar_svgrepo_com)
+            .error(R.drawable.ic_avatar_svgrepo_com)
             .into(textMessageViewHolder.profileImageSender)
     }
 
@@ -353,8 +353,8 @@ class GroupMessageAdapter(
         val messageData = messageList1[position]
         Glide.with(imageMessageViewHolder.imageMessageView.context)
             .load(messageData.docURL)
-            .placeholder(R.drawable.ic_profile_placeholder) //TODO: change placeholder drawable
-            .error(R.drawable.ic_profile_placeholder)
+            .placeholder(R.drawable.ic_avatar_svgrepo_com) //TODO: change placeholder drawable
+            .error(R.drawable.ic_avatar_svgrepo_com)
             .priority(Priority.HIGH)
             .into(imageMessageViewHolder.imageMessageView)
 
@@ -364,8 +364,8 @@ class GroupMessageAdapter(
 
         Glide.with(imageMessageViewHolder.profileImageSender.context)
             .load(messageData.senderImageURL)
-            .placeholder(R.drawable.ic_profile_placeholder)
-            .error(R.drawable.ic_profile_placeholder)
+            .placeholder(R.drawable.ic_avatar_svgrepo_com)
+            .error(R.drawable.ic_avatar_svgrepo_com)
             .into(imageMessageViewHolder.profileImageSender)
 
         imageMessageViewHolder.imageMessageSenderName.text = messageData.senderName

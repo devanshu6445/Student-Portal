@@ -7,16 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.college.portal.studentportal.R
+import com.college.portal.studentportal.SpecificStudentAttendanceFragmentDirections
 import com.college.portal.studentportal.data.model.LoggedInUser
 import com.college.portal.studentportal.data.model.Subject
 import com.college.portal.studentportal.ui.notifications.attendanceFragment.AttendanceFragmentDirections
-import com.college.portal.studentportal.ui.notifications.attendanceFragment.AttendanceRepository
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class AttendanceAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AttendanceAdapter(private val navCode:Int,private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val subList = mutableListOf<Subject>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -30,8 +30,20 @@ class AttendanceAdapter(private val context: Context) : RecyclerView.Adapter<Rec
             subName.text = subject.subCode
         }
         viewHolder.itemView.setOnClickListener {
-            val action = AttendanceFragmentDirections.actionAttendanceFragmentToStudentForAttendanceFragment(subject)
-            it.findNavController().navigate(action)
+            when(navCode){
+                0 ->  {
+                    val items = arrayOf("A","B","C","D")
+                    MaterialAlertDialogBuilder(context,R.style.ThemeOverlay_App_MaterialAlertDialog)
+                        .setItems(items){_,which ->
+                            val action = AttendanceFragmentDirections.actionAttendanceFragmentToStudentForAttendanceFragment(subject,items[which])
+                            it.findNavController().navigate(action)
+                        }.show()
+                }
+                1 -> {
+                    val action = AttendanceFragmentDirections.actionAttendanceFragmentToSpecificStudentAttendanceFragment2(subject)
+                    it.findNavController().navigate(action)
+                }
+            }
         }
     }
 
@@ -51,12 +63,50 @@ class AttendanceAdapter(private val context: Context) : RecyclerView.Adapter<Rec
         val subName: TextView = itemView.findViewById(R.id.group_name)
     }
 }
+class StudentAdapter(private val subject: Subject): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+
+    private val studentList = mutableListOf<LoggedInUser>()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return StudentAttendanceAdapter.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.groups_item,parent,false))
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val viewHolder = holder as StudentAttendanceAdapter.ViewHolder
+        val student = studentList[position]
+        viewHolder.apply {
+            studentName.text = student.userName
+        }
+        viewHolder.itemView.setOnClickListener {
+            val action = SpecificStudentAttendanceFragmentDirections.actionSpecificStudentAttendanceFragmentToMyAttendanceFragment(subject, student.userUid)
+            it.findNavController().navigate(action)
+        }
+    }
+
+    override fun getItemCount(): Int {
+       return studentList.size
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(stuList: List<LoggedInUser>){
+        studentList.clear()
+        studentList.addAll(stuList)
+        notifyDataSetChanged()
+    }
+
+}
+
 
 class StudentAttendanceAdapter(private val context: Context,private val subjectCode:String): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private val studentList = mutableListOf<LoggedInUser>()
-    val absentStudentList = mutableListOf<LoggedInUser>()
-    private val attendanceRepository = AttendanceRepository()
+    val presentStudentList = mutableListOf<LoggedInUser>()
+    //private val attendanceRepository = AttendanceRepository()
+
+    init {
+        presentStudentList.addAll(studentList)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.groups_item,parent,false))
     }
@@ -67,15 +117,15 @@ class StudentAttendanceAdapter(private val context: Context,private val subjectC
         viewHolder.apply {
             studentName.text = student.userName
         }
+
         viewHolder.itemView.setOnClickListener {
-            if (absentStudentList.contains(student)){
-                absentStudentList.remove(student)
-                viewHolder.root.setBackgroundColor(Color.WHITE)
-                Toast.makeText(context, "${student.userName} will be marked as present", Toast.LENGTH_SHORT).show()
+
+            if(presentStudentList.contains(student)){
+                presentStudentList.remove(student)
+                viewHolder.root.setBackgroundColor(context.resources.getColor(R.color.red_btn_bg_color))
             }else{
-                absentStudentList.add(student)
-                viewHolder.root.setBackgroundColor(Color.RED)
-                Toast.makeText(context, "${student.userName} will be marked as absent", Toast.LENGTH_SHORT).show()
+                presentStudentList.add(student)
+                viewHolder.root.setBackgroundColor(Color.WHITE)
             }
         }
     }
@@ -88,6 +138,7 @@ class StudentAttendanceAdapter(private val context: Context,private val subjectC
     fun updateList(stuList: List<LoggedInUser>){
         studentList.clear()
         studentList.addAll(stuList)
+        presentStudentList.addAll(studentList)
         notifyDataSetChanged()
     }
 

@@ -1,6 +1,7 @@
 package com.college.portal.studentportal.ui.dashboard
 
 import android.util.Log
+import android.view.View
 import com.college.portal.studentportal.data.model.BasicGroupDataNetwork
 import com.college.portal.studentportal.data.model.LoggedInUser
 import com.college.portal.studentportal.roomDatabase.groups.BasicGroupData
@@ -11,6 +12,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 
@@ -25,6 +27,7 @@ class GroupRepository(val database: GroupDatabase) {
     private val firebaseDatabase = Firebase.database
     private val databaseReference = firebaseDatabase.reference
     private lateinit var reference: DatabaseReference
+    private val mFirestore = FirebaseFirestore.getInstance()
     private lateinit var childEventListener:ChildEventListener
     private val ioScope = CoroutineScope(Dispatchers.IO + Job())
 
@@ -34,16 +37,84 @@ class GroupRepository(val database: GroupDatabase) {
     fun retrieveGroupsRDatabase(
         currentUser: LoggedInUser
     ){
-        retrieveGroupRDatabase(currentUser)
+        when(currentUser.userDesignation){
+            "teacher","admin","HOD" -> {
+                retrieveGroupsForHigherAuthority(currentUser)
+            }
+            "moderator","student" -> {
+                retrieveGroupRDatabase(currentUser)
+            }
+        }
     }
 
-    private fun retrieveGroupRDatabase(currentUSer: LoggedInUser){
-        Log.d("LoggedInUser",currentUSer.userSemester+currentUSer.userUid)
+    private fun retrieveGroupsForHigherAuthority(currentUser: LoggedInUser){
+        Log.d("LoggedInUser",currentUser.userSemester+currentUser.userUid)
         val dao = database.getGroupDao()
 
-        reference = databaseReference
+        mFirestore.collection("BCA")
+            .get()
+            .addOnSuccessListener {
+                for(document in it){
+                    val groupDataNetwork = document.toObject(BasicGroupDataNetwork::class.java)
+                    ioScope.launch {
+                        val g = dao.searchGroup(groupDataNetwork.groupID)
+                        if(g == null)
+                        {
+                            val groupData = BasicGroupData(
+                                groupDataNetwork.groupName,
+                                groupDataNetwork.groupImage,
+                                groupDataNetwork.groupPurpose,
+                                groupDataNetwork.groupSemester,
+                                groupDataNetwork.groupCourse,
+                                groupDataNetwork.groupID,
+                                ""
+                            )
+                            dao.insertGroup(groupData)
+                        }
+                    }
+                }
+            }.addOnFailureListener {
+
+            }
+    }
+
+    private fun retrieveGroupRDatabase(currentUser: LoggedInUser){
+        Log.d("LoggedInUser",currentUser.userSemester+currentUser.userUid)
+        val dao = database.getGroupDao()
+
+        mFirestore.collection("BCA")
+            .whereEqualTo("groupCourse",currentUser.userCourse)
+            .whereEqualTo("groupSemester","sem${currentUser.userSemester}")
+            .get()
+            .addOnSuccessListener {
+                for(document in it){
+                    val groupDataNetwork = document.toObject(BasicGroupDataNetwork::class.java)
+                    ioScope.launch {
+                        val g = dao.searchGroup(groupDataNetwork.groupID)
+                        if(g == null)
+                        {
+                            val groupData = BasicGroupData(
+                                groupDataNetwork.groupName,
+                                groupDataNetwork.groupImage,
+                                groupDataNetwork.groupPurpose,
+                                groupDataNetwork.groupSemester,
+                                groupDataNetwork.groupCourse,
+                                groupDataNetwork.groupID,
+                                ""
+                            )
+                            dao.insertGroup(groupData)
+                        }
+                    }
+                }
+            }.addOnFailureListener {
+
+            }
+
+       /* reference = databaseReference
+            .child(currentUser.userCourse)
                 .child("groups")
-                .child("sem${currentUSer.userSemester}-details")
+                .child("sem${currentUser.userSemester}-details")
+
         childEventListener = reference.addChildEventListener(object: ChildEventListener{
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val groupDataNetwork = snapshot.getValue<BasicGroupDataNetwork>()
@@ -57,7 +128,9 @@ class GroupRepository(val database: GroupDatabase) {
                                     groupDataNetwork.groupImage,
                                     groupDataNetwork.groupPurpose,
                                     groupDataNetwork.groupSemester,
-                                    groupDataNetwork.groupID,""
+                                    groupDataNetwork.groupCourse,
+                                    groupDataNetwork.groupID,
+                                    ""
                                 )
                             dao.insertGroup(groupData)
                         }
@@ -73,6 +146,7 @@ class GroupRepository(val database: GroupDatabase) {
                             groupDataNetwork.groupImage,
                             groupDataNetwork.groupPurpose,
                             groupDataNetwork.groupSemester,
+                            groupDataNetwork.groupCourse,
                             groupDataNetwork.groupID,
                             ""
                         )
@@ -89,6 +163,7 @@ class GroupRepository(val database: GroupDatabase) {
                             groupDataNetwork.groupImage,
                             groupDataNetwork.groupPurpose,
                             groupDataNetwork.groupSemester,
+                            groupDataNetwork.groupCourse,
                             groupDataNetwork.groupID,
                             ""
                         )
@@ -104,10 +179,11 @@ class GroupRepository(val database: GroupDatabase) {
                 Log.e(TAG,error.message + " " + error.details)
             }
 
-        })
+        })*/
+
     }
 
     fun deRegister(){
-        reference.removeEventListener(childEventListener)
+        /*reference.removeEventListener(childEventListener)*/
     }
 }

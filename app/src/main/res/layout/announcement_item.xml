@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:layout_height="match_parent"
+    android:layout_marginVertical="7dp"
+    android:layout_marginHorizontal="5dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:background="#f5f5f5"
+    app:cardCornerRadius="5dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <TextView
+            android:id="@+id/announcementText"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/rosario_bold"
+            android:text="College Announcement"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/announcementType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group_name"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/ic_group_purpose_background"
+            android:fontFamily="@font/rosario_light"
+            android:gravity="center"
+            android:lineHeight="15sp"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="2dp"
+            android:textAlignment="gravity"
+            android:textColor="#68FF33"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/announcementText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/announcementText"
+            app:layout_constraintTop_toTopOf="@+id/announcementText"
+            tools:text="College" />
+
+        <TextView
+            android:id="@+id/announcementTText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/rosario"
+            android:text="This is a test from the admin "
+            android:textSize="16sp"
+            android:layout_marginTop="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/announcementAttachment"
+            app:layout_constraintStart_toStartOf="@+id/announcementText"
+            app:layout_constraintTop_toBottomOf="@+id/announcementText"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/announcementAttachment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/announcementType"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/ic_baseline_attach_file_24" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

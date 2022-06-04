@@ -15,6 +15,12 @@
             app:destination="@id/announcementInfoFragment"
             app:enterAnim="@anim/modal_out"
             app:exitAnim="@anim/modal_out" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_allAnnouncementFragment"
+            app:destination="@id/allAnnouncementFragment" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_myAssignmentsFragment"
+            app:destination="@id/myAssignmentsFragment" />
     </fragment>
 
     <fragment
@@ -39,6 +45,21 @@
         <action
             android:id="@+id/action_navigation_notifications_to_postAnnouncement"
             app:destination="@id/postAnnouncement" />
+        <action
+            android:id="@+id/action_navigation_notifications_to_announcementInfoFragment"
+            app:destination="@id/announcementInfoFragment" />
+        <action
+            android:id="@+id/action_navigation_notifications_to_sendLeaveRequestFragment"
+            app:destination="@id/sendLeaveRequestFragment" />
+        <action
+            android:id="@+id/action_navigation_notifications_to_myLeaveRequestsFragment"
+            app:destination="@id/myLeaveRequestsFragment" />
+        <action
+            android:id="@+id/action_navigation_notifications_to_leaveRequestApprovingFragment"
+            app:destination="@id/leaveRequestApprovingFragment" />
+        <action
+            android:id="@+id/action_navigation_notifications_to_postAssignmentFragment"
+            app:destination="@id/postAssignmentFragment" />
     </fragment>
     <fragment
         android:id="@+id/announcementInfoFragment"
@@ -63,6 +84,12 @@
         <action
             android:id="@+id/action_attendanceFragment_to_studentForAttendanceFragment"
             app:destination="@id/studentForAttendanceFragment" />
+        <argument
+            android:name="navigationCode"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_attendanceFragment_to_specificStudentAttendanceFragment2"
+            app:destination="@id/specificStudentAttendanceFragment" />
     </fragment>
     <fragment
         android:id="@+id/studentForAttendanceFragment"
@@ -72,6 +99,9 @@
         <argument
             android:name="subject"
             app:argType="com.college.portal.studentportal.data.model.Subject" />
+        <argument
+            android:name="section"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/myAttendanceFragment"
@@ -81,6 +111,9 @@
         <argument
             android:name="subject"
             app:argType="com.college.portal.studentportal.data.model.Subject" />
+        <argument
+            android:name="studentUid"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/selectSubjectFragment"
@@ -98,4 +131,70 @@
         android:name="com.college.portal.studentportal.ui.notifications.announcement.PostAnnouncement"
         android:label="post_announcement_fragment"
         tools:layout="@layout/post_announcement_fragment" />
+    <fragment
+        android:id="@+id/specificStudentAttendanceFragment"
+        android:name="com.college.portal.studentportal.SpecificStudentAttendanceFragment"
+        android:label="specific_student_attendance_fragment"
+        tools:layout="@layout/specific_student_attendance_fragment" >
+        <argument
+            android:name="subject"
+            app:argType="com.college.portal.studentportal.data.model.Subject" />
+        <action
+            android:id="@+id/action_specificStudentAttendanceFragment_to_myAttendanceFragment"
+            app:destination="@id/myAttendanceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/allAnnouncementFragment"
+        android:name="com.college.portal.studentportal.ui.dashboard.allAnnouncements.AllAnnouncementFragment"
+        android:label="all_announcement_fragment"
+        tools:layout="@layout/all_announcement_fragment" >
+        <argument
+            android:name="currentUser"
+            app:argType="com.college.portal.studentportal.data.model.LoggedInUser" />
+    </fragment>
+    <fragment
+        android:id="@+id/myLeaveRequestsFragment"
+        android:name="com.college.portal.studentportal.ui.notifications.leaveRequest.MyLeaveRequestsFragment"
+        android:label="my_leave_requests_fragment"
+        tools:layout="@layout/my_leave_requests_fragment" >
+        <argument
+            android:name="cUser"
+            app:argType="com.college.portal.studentportal.data.model.LoggedInUser" />
+    </fragment>
+    <fragment
+        android:id="@+id/sendLeaveRequestFragment"
+        android:name="com.college.portal.studentportal.ui.notifications.leaveRequest.SendLeaveRequestFragment"
+        android:label="send_leave_request_fragment"
+        tools:layout="@layout/send_leave_request_fragment" >
+        <argument
+            android:name="cUser"
+            app:argType="com.college.portal.studentportal.data.model.LoggedInUser" />
+    </fragment>
+    <fragment
+        android:id="@+id/leaveRequestApprovingFragment"
+        android:name="com.college.portal.studentportal.ui.notifications.leaveRequest.LeaveRequestApprovingFragment"
+        android:label="leave_request_approving_fragment"
+        tools:layout="@layout/leave_request_approving_fragment" >
+        <argument
+            android:name="cUser"
+            app:argType="com.college.portal.studentportal.data.model.LoggedInUser" />
+    </fragment>
+    <fragment
+        android:id="@+id/myAssignmentsFragment"
+        android:name="com.college.portal.studentportal.ui.dashboard.myAssignments.MyAssignmentsFragment"
+        android:label="my_assignments_fragment"
+        tools:layout="@layout/my_assignments_fragment" >
+        <argument
+            android:name="cUser"
+            app:argType="com.college.portal.studentportal.data.model.LoggedInUser" />
+    </fragment>
+    <fragment
+        android:id="@+id/postAssignmentFragment"
+        android:name="com.college.portal.studentportal.ui.notifications.postAssignment.PostAssignmentFragment"
+        android:label="post_assignment_fragment"
+        tools:layout="@layout/post_assignment_fragment" >
+        <argument
+            android:name="cUser"
+            app:argType="com.college.portal.studentportal.data.model.LoggedInUser" />
+    </fragment>
 </navigation>

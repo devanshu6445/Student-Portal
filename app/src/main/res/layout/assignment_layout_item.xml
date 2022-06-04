@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    app:cardCornerRadius="10dp"
+    android:layout_marginVertical="5dp"
+    android:layout_marginHorizontal="5dp"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/assignmentTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/rosario_bold"
+            android:text="Assignment 1"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/assignmentInstructions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/rosario"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi."
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/assignmentAttachments"
+            app:layout_constraintStart_toStartOf="@+id/assignmentTitle"
+            app:layout_constraintTop_toBottomOf="@+id/assignmentTitle"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/assignmentDeadLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:text="Last date: 07/10/2022"
+            android:fontFamily="@font/rosario_bold"
+            android:textColor="@color/red_btn_bg_color"
+            app:layout_constraintBottom_toBottomOf="@+id/assignmentTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/assignmentTitle" />
+
+        <ImageButton
+            android:id="@+id/assignmentAttachments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:contentDescription="Attachments"
+            android:tooltipText="Attachments"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/assignmentDeadLine"
+            app:layout_constraintTop_toBottomOf="@+id/assignmentDeadLine"
+            app:srcCompat="@drawable/ic_baseline_attachment_24" />
+
+        <TextView
+            android:id="@+id/assignmentsSubjectCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BC101"
+            android:fontFamily="@font/rosario"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/assignmentTitle"
+            app:layout_constraintEnd_toStartOf="@+id/assignmentDeadLine"
+            app:layout_constraintStart_toEndOf="@+id/assignmentTitle"
+            app:layout_constraintTop_toTopOf="@+id/assignmentTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

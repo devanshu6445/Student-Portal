@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.Button
 import android.widget.Toast
 import com.android.volley.Request
@@ -48,9 +49,10 @@ class AnnouncementInfoFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_announcement_info, container, false)
-        view.findViewById<Button>(R.id.fetch_test).setOnClickListener {
-            getDataFromURL()
-        }
+        view.findViewById<Button>(R.id.fetch_test).visibility = View.GONE
+        val w = view.findViewById<WebView>(R.id.webVV)
+        w.loadUrl("file:///android_asset/term_condition.html")
+        w.settings.javaScriptEnabled
         return view
     }
     private fun getDataFromURL(){

@@ -17,11 +17,11 @@ import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog
 
 class GroupDetails : AppCompatActivity() {
 
-    private lateinit var binding: ActivityGroupDetailsBinding
+    private var binding: ActivityGroupDetailsBinding? = null
     //private lateinit var requestQueue: RequestQueue
     //private lateinit var token: String
-    private lateinit var participantRV: RecyclerView
-    private lateinit var participantsAdapter: GroupParticipantsAdapter
+    private var participantRV: RecyclerView? = null
+    private var participantsAdapter: GroupParticipantsAdapter? = null
 
     companion object{
         //private const val URL = "https://fcm.googleapis.com/fcm/send"
@@ -30,44 +30,41 @@ class GroupDetails : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGroupDetailsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding?.root)
         supportActionBar?.hide()
         val groupData = intent.getSerializableExtra("group-data") as BasicGroupData
         val database = GroupMessageDatabase.createDatabase(applicationContext,groupData.groupID)
         val groupDetailsViewModel = ViewModelProvider(this, GroupDetailsViewModelFactory(database,groupData))[GroupDetailsViewModel::class.java]
-        Glide.with(binding.groupImage.context)
-            .load(groupData.groupImage)
-            .error(R.drawable.sample)
-            .into(binding.groupImage)
-        binding.groupName.text = groupData.groupName
-        binding.appBarLayoutGD.setNavigationOnClickListener {
+        binding?.groupImage?.let {
+            Glide.with(binding?.groupImage!!.context)
+                .load(groupData.groupImage)
+                .error(R.drawable.sample)
+                .into(it)
+        }
+        binding?.groupName?.text = groupData.groupName
+        binding?.appBarLayoutGD?.setNavigationOnClickListener {
             onBackPressed()
         }
         participantsAdapter = GroupParticipantsAdapter(applicationContext, mutableListOf())
-        participantRV = binding.participantsRV
+        participantRV = binding?.participantsRV
         val linearLayoutManager = LinearLayoutManager(applicationContext)
-        participantRV.apply {
+        participantRV?.apply {
             setHasFixedSize(true)
             layoutManager = linearLayoutManager
         }
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        findViewById<androidx.appcompat.widget.SearchView>(R.id.searchInParticipants).apply {
-            setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            setIconifiedByDefault(false)
-        }
-        participantRV.adapter = participantsAdapter
+        participantRV?.adapter = participantsAdapter
         groupDetailsViewModel.participantList.observe(this) {
-            participantsAdapter.updateParticipantList(it)
-        }
-        binding.searchInParticipants.setOnClickListener {
-            SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE).apply {
-                //progressHelper.barColor = Color.parseColor("#A5DC86")
-                titleText = "Logging out"
-                setCancelable(false)
-            }.show()
+            participantsAdapter?.updateParticipantList(it)
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        participantRV?.adapter = null
+        participantsAdapter = null
+        participantRV = null
+        binding = null
+    }
     //Notification test function START -----------
     /*private fun sendNotification(){
         val jsonObject = JSONObject()

@@ -73,9 +73,11 @@ class GroupMessageRepository(
 
 
     fun updateMessageDatabase() {
-        databaseReference.child("groups")
+        databaseReference
+            .child(basicGroupData.groupCourse)
+            .child("groups")
             .child(basicGroupData.groupSemester)
-            .child(basicGroupData.groupName)
+            .child(basicGroupData.groupID)
             .child("messages")
             .get()
             .addOnSuccessListener {
@@ -101,9 +103,11 @@ class GroupMessageRepository(
     }
 
     private fun retrieveMessages() {
-        reference = databaseReference.child("groups")
+        reference = databaseReference
+            .child(basicGroupData.groupCourse)
+            .child("groups")
             .child(basicGroupData.groupSemester)
-            .child(basicGroupData.groupName)
+            .child(basicGroupData.groupID)
             .child("messages")
         var exist = true //Message existence flag for local database
         childEventListener = reference.addChildEventListener(object : ChildEventListener {
@@ -218,9 +222,11 @@ class GroupMessageRepository(
     }
 
     fun registerParticipantListener() {
-        participantDatabaseReference = databaseReference.child("groups")
+        participantDatabaseReference = databaseReference
+            .child(basicGroupData.groupCourse)
+            .child("groups")
             .child(basicGroupData.groupSemester)
-            .child(basicGroupData.groupName)
+            .child(basicGroupData.groupID)
             .child("participants")
 
         participantChildEventListener =
@@ -279,7 +285,7 @@ class GroupMessageRepository(
         mimeType: String
     ): Boolean {
         val currentParticipant =
-            database.getGroupMessageDao().searchParticipant(loggedInUser.userUid)
+            database.getGroupMessageDao().searchParticipant(loggedInUser.userUid.trim())
 
         if (currentParticipant != null) {
             val uuid = UUID.randomUUID().toString()
@@ -309,9 +315,11 @@ class GroupMessageRepository(
         } else {
             if (check)
                 return false
-            databaseReference.child("groups")
+            databaseReference
+                .child(basicGroupData.groupCourse)
+                .child("groups")
                 .child(basicGroupData.groupSemester)
-                .child(basicGroupData.groupName)
+                .child(basicGroupData.groupID)
                 .child("participants")
                 .get()
                 .addOnSuccessListener {
@@ -340,9 +348,10 @@ class GroupMessageRepository(
         mimeType: String
     ) {
         messageImageReference = storage
+            .child(basicGroupData.groupCourse)
             .child("groups")
             .child(basicGroupData.groupSemester)
-            .child(basicGroupData.groupName)
+            .child(basicGroupData.groupID)
             .child("message-requests")
             .child(uuid)
 
@@ -373,9 +382,10 @@ class GroupMessageRepository(
         mimeType: String
     ) {
         messageImageReference = storage
+            .child(basicGroupData.groupCourse)
             .child("groups")
             .child(basicGroupData.groupSemester)
-            .child(basicGroupData.groupName)
+            .child(basicGroupData.groupID)
             .child("messages")
             .child(uuid)
 
@@ -418,9 +428,11 @@ class GroupMessageRepository(
             timestamp
         )
 
-        databaseReference.child("groups")
+        databaseReference
+            .child(basicGroupData.groupCourse)
+            .child("groups")
             .child(basicGroupData.groupSemester)
-            .child(basicGroupData.groupName)
+            .child(basicGroupData.groupID)
             .child("messages")
             .child(timestamp.toString())
             .setValue(groupMessageData)
@@ -445,9 +457,11 @@ class GroupMessageRepository(
             mimeType,
             timestamp
         )
-        databaseReference.child("groups")
+        databaseReference
+            .child(basicGroupData.groupCourse)
+            .child("groups")
             .child(basicGroupData.groupSemester)
-            .child(basicGroupData.groupName)
+            .child(basicGroupData.groupID)
             .child("messages-requests")
             .child(timestamp.toString())
             .setValue(groupMessageData)
@@ -459,9 +473,11 @@ class GroupMessageRepository(
     }
 
     fun deleteMessage(groupMessageData:GroupMessageInfo) {
-        databaseReference.child("groups")
+        databaseReference
+            .child(basicGroupData.groupCourse)
+            .child("groups")
             .child(basicGroupData.groupSemester)
-            .child(basicGroupData.groupName)
+            .child(basicGroupData.groupID)
             .child("messages")
             .child(groupMessageData.messageTimeStamp.toString())
             .removeValue()

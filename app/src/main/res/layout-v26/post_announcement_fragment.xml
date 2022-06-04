@@ -103,14 +103,25 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_attachments"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textAllCaps="false"
+        android:text="Add attachment +"
+        app:layout_constraintStart_toStartOf="@+id/announcementText"
+        app:layout_constraintTop_toBottomOf="@+id/announcementText" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/postTheAnnouncement"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        app:layout_constraintEnd_toEndOf="@+id/announcementText"
-        app:layout_constraintStart_toStartOf="@+id/announcementText"
-        android:layout_marginTop="25dp"
         android:text="Post the announcement"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/announcementText"
-        />
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/announcementText"
+        app:layout_constraintStart_toStartOf="@+id/announcementText"
+        app:layout_constraintTop_toBottomOf="@+id/add_attachments" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

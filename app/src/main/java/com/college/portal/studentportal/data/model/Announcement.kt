@@ -8,5 +8,6 @@ class Announcement {
     var announcementCreator:String = ""
     var announcementCourse:String? = null
     var announcementClass:String? = null
+    var announcementUrl:String? = null
     var announcementTimestamp = 0L
 }

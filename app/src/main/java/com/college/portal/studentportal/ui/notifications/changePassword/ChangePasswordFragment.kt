@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.college.portal.studentportal.data.model.ChangePassword
 import com.college.portal.studentportal.databinding.ChangePasswordFragmentBinding
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog
@@ -91,6 +92,9 @@ class ChangePasswordFragment : Fragment() {
                 binding.cpCurrentPassword.text.toString(),
                 binding.cpNewPassword.text.toString()
             ))
+        }
+        binding.materialToolbar2.setNavigationOnClickListener {
+            it.findNavController().popBackStack()
         }
         return view
     }

@@ -4,16 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.college.portal.studentportal.data.model.Announcement
+import com.college.portal.studentportal.data.model.MediaFile
+import com.college.portal.studentportal.roomDatabase.announcement.AnnouncementDatabase
+import java.util.*
 
-class PostAnnouncementViewModel : ViewModel(), AnnouncementResult {
+class PostAnnouncementViewModel(database: AnnouncementDatabase) : ViewModel(), AnnouncementResult {
 
-    private val announcementRepository = AnnouncementRepository()
+    private val announcementRepository = AnnouncementRepository(database)
     lateinit var exception: java.lang.Exception
     private val _uploadStatus = MutableLiveData(0)
     val uploadStatus:LiveData<Int> = _uploadStatus
 
-    fun postAnnouncement(announcement: Announcement) {
-        announcementRepository.postAnnouncement(announcement,this)
+    init {
+        announcementRepository.updateAnnouncementDatabase("BCA","A")
+    }
+    fun postAnnouncement(announcement: Announcement,fileList:Stack<MediaFile>) {
+        announcementRepository.uploadFiles(fileList,announcement,this)
     }
 
     override fun onSuccessful() {
@@ -24,7 +30,6 @@ class PostAnnouncementViewModel : ViewModel(), AnnouncementResult {
         _uploadStatus.value = 2
         exception = e
     }
-
 }
 
 interface AnnouncementResult {

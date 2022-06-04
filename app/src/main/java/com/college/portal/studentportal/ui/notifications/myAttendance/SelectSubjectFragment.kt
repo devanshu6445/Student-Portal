@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.college.portal.studentportal.WrapContentLinearLayoutManager
@@ -31,10 +32,13 @@ class SelectSubjectFragment: Fragment() {
         binding?.linearLayout2?.visibility = View.GONE
         recyclerView = binding?.subjectRV
         recyclerView?.layoutManager = WrapContentLinearLayoutManager(activity?.applicationContext!!)
-        val subjectAdapter = SubjectAdapter()
+        val subjectAdapter = SubjectAdapter(args.currentUser.userUid)
         recyclerView?.adapter = subjectAdapter
         viewModel.subjectList.observe(viewLifecycleOwner){
             subjectAdapter.updateList(it)
+        }
+        binding?.attendanceToolbar?.setNavigationOnClickListener {
+            it.findNavController().popBackStack()
         }
         return view
     }

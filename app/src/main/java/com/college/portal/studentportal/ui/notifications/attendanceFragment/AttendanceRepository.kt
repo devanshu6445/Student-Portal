@@ -3,8 +3,10 @@ package com.college.portal.studentportal.ui.notifications.attendanceFragment
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.college.portal.studentportal.callback.FirebaseGeneralCallback
 import com.college.portal.studentportal.data.model.LoggedInUser
 import com.college.portal.studentportal.data.model.Subject
+import com.college.portal.studentportal.roomDatabase.subjectDatabase.SubjectDatabase
 import com.college.portal.studentportal.roomDatabase.user.CurrentUserDatabase
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,6 +17,11 @@ import java.util.*
 
 class AttendanceRepository() {
 
+    private var database:SubjectDatabase? = null
+
+    constructor(database: SubjectDatabase):this(){
+        this.database = database
+    }
     private val mFirestore = FirebaseFirestore.getInstance()
     private val mDatabaseReference = FirebaseDatabase.getInstance().reference
     private var studentDatabase: CurrentUserDatabase? = null
@@ -26,8 +33,13 @@ class AttendanceRepository() {
     companion object{
         private const val TAG = "AttendanceRepository"
     }
-    suspend fun getStudentForTheSubject(semester:String,course:String):Flow<List<LoggedInUser>> = withContext(Dispatchers.IO){
-        return@withContext studentDatabase?.getCurrentUserDao()?.getStudentListForAttendance(semester,course)!!
+
+    suspend fun getStudentForTheSubject(semester:String,course:String,section:String):Flow<List<LoggedInUser>> = withContext(Dispatchers.IO){
+        return@withContext studentDatabase?.getCurrentUserDao()?.getStudentListForAttendance(semester,course,section)!!
+    }
+
+    suspend fun getStudentForShowingAttendance(semester: String,course: String):Flow<List<LoggedInUser>>? = withContext(Dispatchers.IO){
+        return@withContext studentDatabase?.getCurrentUserDao()?.getStudentListForShowingAttendance(semester,course)
     }
 
     fun getStudentForTheSubjectNetwork(){
@@ -65,26 +77,39 @@ class AttendanceRepository() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun submitAttendance(absenteesList: List<LoggedInUser>, subjectCode:String){
-        val uid = mutableListOf<String>()
+    fun submitAttendance(presentStudentList: List<LoggedInUser>, subjectCode:String,callback: FirebaseGeneralCallback){
+        val uid = hashMapOf<String,String>()
         //making an absent student list with only their uid to send to database
-        absenteesList.forEach {
-            uid.add(it.userUid)
+        presentStudentList.forEach {
+            uid[it.userUid] = it.userUid
         }
+
         //Taking date locally to use it as node name in database
         val date =  Date()
         val day = SimpleDateFormat("dd",Locale.UK).format(date)
         val month = SimpleDateFormat("MMMM",Locale.UK).format(date)
 
+        //this will update the children(if there is any matching key i till update if there is not then
+        // it will just add that key : value pair to node)
+        // if it exist if it doesn't exist i will create one
         mDatabaseReference
             .child("attendance")
             .child(subjectCode)
             .child(month)
             .child(day)
-            .setValue(uid)
+            .updateChildren(uid.toMap())
+            .addOnSuccessListener {
+                callback.onSuccessful()
+            }.addOnFailureListener {
+                callback.onFailure(it)
+            }
     }
 
-    fun getSubjectList(listener:FirebaseAttendanceCallback<Subject>){
+    suspend fun getSubjectList():List<Subject>? {
+        return database?.getSubjectDao()?.getSubjectList()
+    }
+
+    fun updateSubjectDatabase(){
         mFirestore.collection("subjects")
             .get()
             .addOnCompleteListener {
@@ -94,7 +119,9 @@ class AttendanceRepository() {
                         val subject = document.toObject(Subject::class.java)
                         subjectList.add(subject)
                     }
-                    listener.onSuccessful(subjectList)
+                    ioScope.launch {
+                        database?.getSubjectDao()?.insertSubjectInBulk(subjectList)
+                    }
                 }
             }
     }

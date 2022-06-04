@@ -7,20 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.college.portal.studentportal.R
 import com.college.portal.studentportal.WrapContentLinearLayoutManager
 import com.college.portal.studentportal.adapter.GroupAdapter
 import com.college.portal.studentportal.databinding.FragmentDashboardBinding
+import com.college.portal.studentportal.roomDatabase.announcement.AnnouncementDatabase
 import com.college.portal.studentportal.roomDatabase.groups.GroupDatabase
 import com.college.portal.studentportal.roomDatabase.user.CurrentUserDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class DashboardFragment : Fragment() {
 
@@ -42,7 +42,9 @@ class DashboardFragment : Fragment() {
         dashboardViewModel = ViewModelProvider(
             this, DashboardViewModelFactory(
                 CurrentUserDatabase.getDatabase(activity?.applicationContext!!),
-                GroupDatabase.getInstance(activity?.applicationContext!!)
+                GroupDatabase.getInstance(activity?.applicationContext!!),
+                AnnouncementDatabase.getDatabase(activity?.applicationContext!!),
+                CurrentUserDatabase.getDatabase(activity?.applicationContext!!,"studentDatabase")
             )
         )[DashboardViewModel::class.java]
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
@@ -74,7 +76,6 @@ class DashboardFragment : Fragment() {
                     }
                 }
             }
-
         })
         dashboardViewModel.groupList.observe(viewLifecycleOwner) {
             recyclerViewGroupAdapter.updateList(it)
@@ -84,9 +85,36 @@ class DashboardFragment : Fragment() {
             binding.homeAnnouncement.startAnimation(animation)
             binding.homeAnnouncement.visibility = View.GONE
         }
-
+        lifecycleScope.launch {
+            check()
+        }
         binding.homeAnnouncement.setOnClickListener {
             root.findNavController().navigate(R.id.action_navigation_dashboard_to_announcementInfoFragment)
+        }
+        dashboardViewModel.latestAnnouncement.observe(viewLifecycleOwner){
+            if(it != null){
+                binding.apply {
+                    homeAnnouncement.visibility = View.VISIBLE
+                    homeAnnouncementText.text = it.announcementText
+                    homeAnnouncementSentBy.text = it.announcementCreator
+                }
+            }else{
+                binding.homeAnnouncement.visibility = View.GONE
+            }
+        }
+
+
+        binding.allAnnouncements.setOnClickListener {
+            try {
+                val action = DashboardFragmentDirections.actionNavigationDashboardToAllAnnouncementFragment(dashboardViewModel.loggedInUser)
+                it.findNavController().navigate(action)
+            } catch (e: UninitializedPropertyAccessException) {
+                Toast.makeText(activity?.applicationContext, e.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+        binding.assignments.setOnClickListener {
+            val action = DashboardFragmentDirections.actionNavigationDashboardToMyAssignmentsFragment(dashboardViewModel.loggedInUser)
+            it.findNavController().navigate(action)
         }
         return root
     }
@@ -96,6 +124,24 @@ class DashboardFragment : Fragment() {
         _binding = null
         recyclerView?.adapter = null
         recyclerView = null
+    }
+    private suspend fun check(){
+        try {
+            when(dashboardViewModel.loggedInUser.userDesignation){
+                "teacher","admin","HOD" -> {
+                    binding.assignments.visibility = View.GONE
+                    return
+                }
+                "moderator","student" -> {
+                    //do the work here for different types of user
+
+                    return
+                }
+            }
+        }catch (e:UninitializedPropertyAccessException){
+            delay(1000)
+            check()
+        }
     }
 
 }

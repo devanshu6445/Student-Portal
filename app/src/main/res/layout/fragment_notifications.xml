@@ -9,7 +9,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/contentBodyColor">
+        android:background="@color/contentBodyColor"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="-200dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,9 +53,9 @@
 
                 <ImageView
                     style="@style/viewParent"
-                    android:src="@drawable/ic_more"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_more" />
 
             </RelativeLayout>
 
@@ -65,7 +67,7 @@
 
             <TextView
                 style="@style/viewParent.headerText.settingsMiniTitle"
-                android:text="Profile"/>
+                android:text="Profile" />
 
             <TextView
                 android:id="@+id/editProfile"
@@ -99,8 +101,38 @@
                 app:drawableLeftCompat="@drawable/ic_announcement" />
 
             <TextView
+                android:id="@+id/assign_an_assignment"
+                style="@style/viewParent.headerText.settingsTextIcon"
+                android:text="Post an assignment"
+                app:drawableLeftCompat="@drawable/ic_announcement" />
+
+            <TextView
+                android:id="@+id/show_student_attendance"
+                style="@style/viewParent.headerText.settingsTextIcon"
+                android:text="Show student attendance"
+                app:drawableLeftCompat="@drawable/ic_frame_5" />
+
+            <TextView
+                android:id="@+id/my_leave_requests"
+                style="@style/viewParent.headerText.settingsTextIcon"
+                android:text="My leave requests"
+                app:drawableLeftCompat="@drawable/ic_frame_5" />
+
+            <TextView
+                android:id="@+id/leave_request"
+                style="@style/viewParent.headerText.settingsTextIcon"
+                android:text="Leave request"
+                app:drawableLeftCompat="@drawable/ic_frame_5" />
+
+            <TextView
+                android:id="@+id/leave_request_approve"
+                style="@style/viewParent.headerText.settingsTextIcon"
+                android:text="Approve leave request"
+                app:drawableLeftCompat="@drawable/ic_frame_5" />
+
+            <TextView
                 style="@style/viewParent.headerText.settingsMiniTitle"
-                android:text="Notifications"/>
+                android:text="Notifications" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 style="@style/settingsText"
@@ -110,12 +142,19 @@
 
             <TextView
                 style="@style/viewParent.headerText.settingsMiniTitle"
-                android:text="Regional"/>
+                android:text="Regional" />
 
             <TextView
+                android:id="@+id/language"
                 style="@style/viewParent.headerText.settingsTextIcon"
                 android:text="Language"
                 app:drawableLeftCompat="@drawable/ic_languages" />
+
+            <TextView
+                android:id="@+id/about_us"
+                style="@style/viewParent.headerText.settingsTextIcon"
+                android:text="About Us"
+                app:drawableLeftCompat="@drawable/ic_vector__1_" />
 
             <TextView
                 android:id="@+id/logout"
@@ -123,11 +162,10 @@
                 android:text="Logout"
                 app:drawableLeftCompat="@drawable/ic_logout" />
 
-
             <TextView
                 style="@style/viewParent.headerText.settingsMiniTitle"
                 android:text="App ver 2.0.1"
-                android:textAlignment="center"/>
+                android:textAlignment="center" />
 
         </LinearLayout>
     </ScrollView>

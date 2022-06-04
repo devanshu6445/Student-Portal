@@ -34,9 +34,10 @@ import com.college.portal.studentportal.ui.group_participant_details.GroupDetail
 class GroupMessageActivity : AppCompatActivity() {
 
     private var binding: ActivityGroupMessageBinding? = null
-    private lateinit var groupMessageAdapter: GroupMessageAdapter
+    private var groupMessageAdapter: GroupMessageAdapter? = null
     private lateinit var groupMessageViewModel: GroupMessageViewModel
     private lateinit var groupData:BasicGroupData
+    private var recyclerView:RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +61,8 @@ class GroupMessageActivity : AppCompatActivity() {
             stackFromEnd = false
             reverseLayout = true
         }
-        val recyclerView = findViewById<RecyclerView>(R.id.RecyclerView_groupMessage)
-        recyclerView.apply {
+        recyclerView = findViewById(R.id.RecyclerView_groupMessage)
+        recyclerView?.apply {
             setHasFixedSize(true)
         }
         val getImage = registerForActivityResult(
@@ -79,7 +80,7 @@ class GroupMessageActivity : AppCompatActivity() {
             }
         }
 
-        recyclerView.layoutManager = layoutManager
+        recyclerView?.layoutManager = layoutManager
 
         binding?.groupTitle?.setOnClickListener {
             startActivity(Intent(this@GroupMessageActivity, GroupDetails::class.java).apply {
@@ -90,7 +91,6 @@ class GroupMessageActivity : AppCompatActivity() {
         val imageButton = binding!!.optionMenu
 
         imageButton.setOnClickListener {
-            Toast.makeText(this, "${groupMessageViewModel.currentParticipant?.banTime}", Toast.LENGTH_SHORT).show()
             if(groupMessageViewModel.currentParticipant?.banTime?.toInt() != 0){
                 Toast.makeText(this, "You have been banned from sending messages.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -152,7 +152,7 @@ class GroupMessageActivity : AppCompatActivity() {
         groupMessageAdapter = GroupMessageAdapter(applicationContext, mutableListOf(),this,database
         )
 
-        recyclerView.adapter = groupMessageAdapter
+        recyclerView?.adapter = groupMessageAdapter
 
         binding?.groupMessageImage?.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
@@ -177,7 +177,7 @@ class GroupMessageActivity : AppCompatActivity() {
         }
 
         groupMessageViewModel.groupMessageList.observe(this) {
-            groupMessageAdapter.updateMessageList(it)
+            groupMessageAdapter?.updateMessageList(it)
         }
         groupMessageViewModel.messageSent.observe(this){
             if(it){
@@ -194,7 +194,7 @@ class GroupMessageActivity : AppCompatActivity() {
             layoutManager.smoothScrollToPosition(
                 recyclerView,
                 null,
-                groupMessageAdapter.itemCount
+                groupMessageAdapter?.itemCount!!
             )
         }
     }
@@ -270,6 +270,10 @@ class GroupMessageActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        recyclerView?.adapter = null
+        groupMessageAdapter?.activity = null
+        groupMessageAdapter = null
+        recyclerView = null
         binding = null
         Runtime.getRuntime().gc()
     }

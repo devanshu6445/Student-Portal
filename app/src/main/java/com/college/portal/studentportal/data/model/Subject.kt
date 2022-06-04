@@ -1,10 +1,13 @@
 package com.college.portal.studentportal.data.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
+@Entity(tableName = "subjects")
 class Subject() : Serializable{
 
-    var subCode = ""
+    @PrimaryKey(autoGenerate = false) var subCode = ""
     var subName = ""
     var subSem = ""
     var subTaughtBy = ""

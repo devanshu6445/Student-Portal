@@ -9,11 +9,13 @@ class BasicGroupDataNetwork(): Serializable {
     var groupPurpose:String = ""
     var groupSemester:String = ""
     var groupID: String = ""
+    var groupCourse = ""
 
     constructor(groupName:String,
                 groupImage:String,
                 groupPurpose:String,
-                groupSemester:String, groupID:String) : this() {
+                groupSemester:String,
+                groupID:String) : this() {
         this.groupName = groupName
         this.groupImage = groupImage
         this.groupPurpose  = groupPurpose

@@ -1,5 +1,6 @@
 package com.college.portal.studentportal.ui.notifications.myAttendance
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener
@@ -23,20 +25,28 @@ class MyAttendanceFragment : Fragment() {
     private lateinit var binding: MyAttendanceFragmentBinding
     private lateinit var viewModel: MyAttendanceViewModel
     private val args: MyAttendanceFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = MyAttendanceFragmentBinding.inflate(inflater,container,false)
         val database = AttendanceDatabase.getDatabase(activity?.applicationContext!!,args.subject.subCode)
-        viewModel = ViewModelProvider(this,MyAttendanceViewModelFactory(database,args.subject))[MyAttendanceViewModel::class.java]
+        viewModel = ViewModelProvider(this,MyAttendanceViewModelFactory(database,args.subject,args.studentUid))[MyAttendanceViewModel::class.java]
         val view = binding.root
 
         viewModel.attendanceList.observe(viewLifecycleOwner){
 
             val highLighted = mutableListOf<EventDay>()
             it.forEach {it1 ->
-                if(!it1.isPresent){
+                if(it1.isPresent){
+                    highLighted.add(
+                        EventDay(Calendar.getInstance().apply {
+                            set(it1.year, monthArray.indexOf(it1.month),it1.day)
+                        },R.color.green)
+
+                    )
+                }else{
                     highLighted.add(
                         EventDay(Calendar.getInstance().apply {
                             set(it1.year, monthArray.indexOf(it1.month),it1.day)
@@ -63,6 +73,9 @@ class MyAttendanceFragment : Fragment() {
         }
         binding.calendarView.setOnPreviousPageChangeListener(onCalendarPageChangeListener)
         binding.calendarView.setOnForwardPageChangeListener(onCalendarPageChangeListener)
+        binding.attendanceToolbar.setNavigationOnClickListener {
+            it.findNavController().popBackStack()
+        }
         return view
     }
 

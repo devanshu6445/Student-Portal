@@ -10,15 +10,19 @@
         <entry key="app/src/main/res/drawable/circular_shape.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/home_notice_background.xml" value="0.1485" />
         <entry key="app/src/main/res/drawable/ic_announcement.xml" value="0.159" />
+        <entry key="app/src/main/res/drawable/ic_avatar_svgrepo_com.xml" value="0.16" />
         <entry key="app/src/main/res/drawable/ic_back_arrow.xml" value="0.1755" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_download_24.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/ic_baseline_attach_file_24.xml" value="0.114" />
         <entry key="app/src/main/res/drawable/ic_baseline_attachment_24.xml" value="0.114" />
+        <entry key="app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.159" />
+        <entry key="app/src/main/res/drawable/ic_baseline_file_copy_24.xml" value="0.159" />
         <entry key="app/src/main/res/drawable/ic_dark_mode.xml" value="0.1485" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.17850877192982456" />
         <entry key="app/src/main/res/drawable/ic_document_message_background.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/ic_document_message_parent_background.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/ic_documents.xml" value="0.168" />
+        <entry key="app/src/main/res/drawable/ic_edit_password.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/ic_edit_profile.xml" value="0.1535" />
         <entry key="app/src/main/res/drawable/ic_educationbackground_03.xml" value="0.17850877192982456" />
         <entry key="app/src/main/res/drawable/ic_email_vec.xml" value="0.1884259259259259" />
@@ -52,34 +56,48 @@
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.1366120218579235" />
         <entry key="app/src/main/res/layout/activity_frag.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_group_details.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_group_message.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_group_message.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12817028985507245" />
         <entry key="app/src/main/res/layout/activity_message_requests.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_motion_layout_practice.xml" value="0.3254177660510114" />
         <entry key="app/src/main/res/layout/activity_student_main.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/all_announcement_fragment.xml" value="0.12435897435897436" />
+        <entry key="app/src/main/res/layout/announcement_item.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/assignment_layout_item.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/assignment_media_layout.xml" value="0.16" />
+        <entry key="app/src/main/res/layout/assignment_media_layout_item.xml" value="0.12763157894736843" />
         <entry key="app/src/main/res/layout/attendance_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/change_password_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/edit_student_details_fragment.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_announcement_info.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.3866513233601841" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1649122807017544" />
-        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/groups_item.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/groups_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/image_message_full_view.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_document_group_message.xml" value="0.4592198581560284" />
         <entry key="app/src/main/res/layout/item_group_message_image.xml" value="0.2901960784313726" />
         <entry key="app/src/main/res/layout/item_group_message_text.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_message_request.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/leave_request_approve_item.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/leave_request_approving_fragment.xml" value="0.12763157894736843" />
+        <entry key="app/src/main/res/layout/leave_request_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.12435897435897436" />
         <entry key="app/src/main/res/layout/login_field.xml" value="0.17407407407407408" />
         <entry key="app/src/main/res/layout/m_layout.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/media_layout_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/message_request_attachments.xml" value="0.16228070175438597" />
+        <entry key="app/src/main/res/layout/my_assignments_fragment.xml" value="0.12763157894736843" />
         <entry key="app/src/main/res/layout/my_attendance_fragment.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/my_leave_requests_fragment.xml" value="0.12435897435897436" />
         <entry key="app/src/main/res/layout/myattendance_recylerview_item.xml" value="0.75" />
         <entry key="app/src/main/res/layout/post_announcement_fragment.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/post_assignment_fragment.xml" value="0.22" />
         <entry key="app/src/main/res/layout/searchable_activity.xml" value="0.14736842105263157" />
+        <entry key="app/src/main/res/layout/send_leave_request_fragment.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/specific_student_attendance_fragment.xml" value="0.18" />
         <entry key="app/src/main/res/layout/student_for_attendance_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/text_message_operation_menu.xml" value="0.32456140350877194" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.16228070175438597" />
@@ -100,7 +118,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.14" />
+        <option name="scale" value="0.22" />
       </ProjectState>
     </option>
   </component>

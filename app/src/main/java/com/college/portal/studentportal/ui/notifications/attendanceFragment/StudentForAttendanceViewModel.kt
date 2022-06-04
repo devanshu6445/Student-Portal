@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.college.portal.studentportal.callback.FirebaseGeneralCallback
 import com.college.portal.studentportal.data.model.LoggedInUser
 import com.college.portal.studentportal.roomDatabase.user.CurrentUserDatabase
 import kotlinx.coroutines.Dispatchers
@@ -15,19 +16,27 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
-class StudentForAttendanceViewModel(subjectSemester:String,course:String,studentDatabase: CurrentUserDatabase) : ViewModel(),FirebaseAttendanceCallback<LoggedInUser> {
+class StudentForAttendanceViewModel(
+    subjectSemester: String,
+    course: String,
+    section: String,
+    studentDatabase: CurrentUserDatabase
+) : ViewModel(),FirebaseGeneralCallback {
 
     private val attendanceRepository = AttendanceRepository(studentDatabase)
-    private val  _studentList = MutableLiveData<List<LoggedInUser>>()
-    val studentList:LiveData<List<LoggedInUser>> = _studentList
+    private val _studentList = MutableLiveData<List<LoggedInUser>>()
+    private val _uploadStatus = MutableLiveData(0)
+    val uploadStatus:LiveData<Int> = _uploadStatus
+    val studentList: LiveData<List<LoggedInUser>> = _studentList
 
-    companion object{
+    companion object {
         private const val TAG = "StudentForAttendanceVie"
     }
+
     init {
         viewModelScope.launch {
-            attendanceRepository.getStudentForTheSubject(subjectSemester,course).collect {
-                withContext(Dispatchers.Main){
+            attendanceRepository.getStudentForTheSubject(subjectSemester, course, section).collect {
+                withContext(Dispatchers.Main) {
                     _studentList.value = it
                 }
             }
@@ -36,15 +45,17 @@ class StudentForAttendanceViewModel(subjectSemester:String,course:String,student
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun submit(absentStudentList:List<LoggedInUser>,subjectCode:String){
-        attendanceRepository.submitAttendance(absentStudentList,subjectCode)
+    fun submit(presentStudentList: List<LoggedInUser>, subjectCode: String) {
+        _uploadStatus.value = 1
+        attendanceRepository.submitAttendance(presentStudentList, subjectCode,this)
     }
 
-    override fun onSuccessful(list: List<LoggedInUser>) {
-        _studentList.value = list
+
+    override fun onSuccessful() {
+        _uploadStatus.value = 2
     }
 
     override fun onFailure(error: Exception) {
-        Log.e(TAG, "onFailure: ${error.message}", error)
+        _uploadStatus.value = 3
     }
 }

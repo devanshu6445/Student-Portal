@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_back_arrow">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:layout_marginStart="-20dp">
@@ -31,21 +31,31 @@
                 android:layout_height="40dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/shutterstock_1137339098"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Rounded" />
 
             <LinearLayout
                 android:id="@+id/groupTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_toStartOf="@+id/optionMenu"
                 android:layout_toEndOf="@+id/group_image"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/optionMenu"
+                app:layout_constraintStart_toEndOf="@+id/group_image"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/groupName"
-                    android:layout_width="165dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="17dp"
                     android:fontFamily="@font/rosario_bold"
+                    android:singleLine="true"
+                    android:layout_marginEnd="10dp"
                     android:text="Android Development"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -65,12 +75,15 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/options"
+                android:layout_marginEnd="15dp"
                 android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_three_dots" />
-            </RelativeLayout>
+                android:src="@drawable/ic_three_dots"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.Toolbar>
 

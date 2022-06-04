@@ -100,7 +100,7 @@ class MessageRequestAdapter(private val context: Context): RecyclerView.Adapter<
         return messageRequestList.size
     }
 
-    private class MessageRequestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    open class MessageRequestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val requesterName:TextView = itemView.findViewById(R.id.requesterName)
         val requestedMessage:TextView = itemView.findViewById(R.id.requestMessage)
         val approveRequest:MaterialButton = itemView.findViewById(R.id.approveRequest)
